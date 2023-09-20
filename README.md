@@ -1,3 +1,6 @@
+## Note: 
+### There was a failure with the nested repository, so the frontend part may contain some deficiencies. I'll try to fix it in the next few days.
+
 # Taskly(Frontend)
 ## Description
 
