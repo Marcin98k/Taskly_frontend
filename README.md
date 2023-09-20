@@ -1,27 +1,32 @@
-# TasklyFrontend
+# Taskly(Frontend)
+## Description
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.3.
+Taskly is a task management application that assists in planning and organizing tasks. Its main features include:
 
-## Development server
+- **Task Planning and Management:** Tasks can be set according to priority, category, status, and duration (from -> to, from -> forever).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Registration and Login:** The application requires an account setup, to which tasks are assigned. Spring Security has been utilized for login, registration, and authorization.
 
-## Code scaffolding
+## Usage
+The application is under development. More information on usage will be provided soon.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Requirements
+The following tools and technologies are needed to run and develop this project:
 
-## Build
+- **Visual Studio Code:** The IDE used for writing and testing code.
+- **Angular:** A framework for building web applications.
+- **Material UI:** A UI component library for easier user interface design.
+- **HTML/CSS:** Languages for creating and styling web pages.
+- **TypeScript:** A programming language used for writing client-side scripts.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Dependencies
+The application uses the following dependencies:
 
-## Running unit tests
+- @angular/core: ^16.2.2
+- @angular/router: ^16.2.2
+- @types/angular: ^1.8.5
+- moment: ^2.29.4
+- @fortawesome/free-solid-svg-icons: An icon library used in the project.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Contact
+If you have any questions/suggestions about this project, please [contact me](marcin3009k@gmail.com).
