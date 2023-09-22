@@ -1,1 +1,61 @@
-<p>register works!</p>
+<main>
+    <div class="register-container">
+        <div class="register-part">
+            <div class="inner-part">
+                <div class="field-container">
+                    <h2>Sign up</h2>
+                </div>
+                <div class="field-container">
+                    <h5>and create your tasks</h5>
+                </div>
+                <div class="field-container">
+                    <img src="assets/images/checklist-img.svg" alt="checklist-img">
+                </div>
+            </div>
+        </div>
+        <div class="register-part">
+            <div class="inner-part">
+                <div class="field-container">
+                    <h3>Create account</h3>
+                </div>
+                <form [formGroup]="signUp" (ngSubmit)="ngSubmit()" class="needs-validation" novalidate>
+                    <div class="field-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Username</mat-label>
+                            <input matInput formControlName="registerUsername" name="username"
+                                placeholder="Enter the username" required>
+                            <mat-error *ngIf="usernameControl.hasError('required')">You need to pass
+                                username</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="field-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Password</mat-label>
+                            <input matInput formControlName="registerPassword" name="password" type="password"
+                                placeholder="Enter the password" required>
+                            <mat-error *ngIf="passwordControl.hasError('required')">You need to pass
+                                password</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="field-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Confirm password</mat-label>
+                            <input matInput formControlName="registerConfirmPassword" name="confirmPassword"
+                                type="password" placeholder="Enter the password" required>
+                            <mat-error *ngIf="confirmPasswordControl.hasError('required')">You need to pass
+                                password</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="field-container">
+                        <button class="btn btn-success" type="submit">Sing up</button>
+                    </div>
+                </form>
+                <div class="field-container">
+                    <a routerLink="/login">
+                        <span class="link-name">Sign in?</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

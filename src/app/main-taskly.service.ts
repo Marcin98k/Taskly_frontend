@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Task } from '../app/model/task';
+import { Task } from './model/task';
 import * as moment from 'moment';
-import { User } from '../app/model/user';
-import { UserProperties } from '../app/model/user-properties';
-import { TokenService } from '../app/token.service';
+import { User } from './model/user';
+import { UserProperties } from './model/user-properties';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'

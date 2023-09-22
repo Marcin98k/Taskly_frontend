@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { TokenService } from 'src/app/token.service';
 import { User } from '../model/user';
-import { MainTasklyService } from 'src/service/main-taskly.service';
+import { MainTasklyService } from 'src/app/main-taskly.service';
 
 @Component({
   selector: 'app-task-details',

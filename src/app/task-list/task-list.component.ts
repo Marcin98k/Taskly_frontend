@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table'
 import { TokenService } from 'src/app/token.service';
 import { concatMap } from 'rxjs/operators';
 import { UserProperties } from '../model/user-properties';
-import { MainTasklyService } from 'src/service/main-taskly.service';
+import { MainTasklyService } from 'src/app/main-taskly.service';
 
 @Component({
   selector: 'app-task-list',

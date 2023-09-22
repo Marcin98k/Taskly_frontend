@@ -7,7 +7,7 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import * as moment from 'moment';
 import { UserProperties } from '../model/user-properties';
 import { TokenService } from 'src/app/token.service';
-import { MainTasklyService } from 'src/service/main-taskly.service';
+import { MainTasklyService } from 'src/app/main-taskly.service';
 
 @Component({
   selector: 'app-task-create',

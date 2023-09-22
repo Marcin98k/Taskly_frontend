@@ -1,7 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TaskCreateComponent } from './task-create/task-create.component';
+import { TaskListComponent } from './task-list/task-list.component';
+import { TaskUpdateComponent } from './task-update/task-update.component';
+import { TaskDetailsComponent } from './task-details/task-details.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+{ path: 'tasks', component: TaskListComponent },
+{ path: 'create-task', component: TaskCreateComponent },
+{ path: 'update-task/:id', component: TaskUpdateComponent},
+{ path: 'task-details/:id', component: TaskDetailsComponent},
+{ path: 'login', component: LoginComponent},
+{ path: 'register', component: RegisterComponent},
+{ path: '', redirectTo: 'tasks', pathMatch: 'full' }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

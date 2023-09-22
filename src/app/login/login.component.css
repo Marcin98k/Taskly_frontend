@@ -1,0 +1,53 @@
+.login-container {
+    height: 75vh;
+    max-height: 500px;
+    background-color: white;
+    -webkit-box-shadow: 3px 11px 24px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 3px 11px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 3px 11px 24px 0px rgba(66, 68, 90, 1);
+    border-radius: 15px;
+    font-style: italic;
+}
+
+.login-part {
+    width: 50%;
+    height: 100%;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.inner-part {
+    width: 100%;
+}
+
+.login-part img {
+    height: 80px;
+}
+
+.login-part:first-child {
+    background: rgb(6, 0, 101);
+    background: linear-gradient(90deg, rgba(6, 0, 101, 1) 0%, rgba(0, 0, 255, 1) 50%, rgba(0, 212, 255, 1) 100%);
+    color: white;
+}
+
+.field-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.field-container a {
+    margin: 5px auto;
+}
+
+.login-part mat-form-field {
+    width: 75%;
+}
+
+.field-container button {
+    width: 45%;
+}
