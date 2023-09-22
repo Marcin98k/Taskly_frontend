@@ -1,1 +1,43 @@
-<p>task-details works!</p>
+<!-- <app-side-bar></app-side-bar> -->
+<main>
+    <div class="details-container">
+        <div class="details-sub-container first" style="width: 65%;">
+            <h6>Nazwa:</h6>
+            <p>{{task.name}}</p>
+            <h6>Opis:</h6>
+            <p>{{task.note}}</p>
+        </div>
+        <div class="details-sub-container second" style="width: 35%;">
+            <h6>Category:</h6>
+            <p>{{task.category}}</p>
+            <h6>Start:</h6>
+            <p>{{task.startDate}}</p>
+            <h6>End:</h6>
+            <p>{{task.endDate}}</p>
+            <h6>Priority</h6>
+            <p>{{task.priority}}</p>
+            <h6>State</h6>
+            <p>{{task.state}}</p>
+        </div>
+        <div class="details-btn">
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <button type="button" class="btn btn-outline-info m-btn"
+                            (click)="updateTask(task.id)">Edit</button>
+                    </td>
+                    <td colspan="2">
+                        <button type="button" class="btn btn-outline-danger m-btn"
+                            (click)="deleteTask(task.id)">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <button type="button" class="btn btn-success m-btn"
+                            (click)="finishTask(task.id)">Finish</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>
