@@ -6,10 +6,10 @@ import {
   faScroll, faClipboard, faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { MatTableDataSource } from '@angular/material/table'
-import { TokenService } from 'src/app/token.service';
+import { TokenService } from 'src/app/services/token.service';
 import { concatMap } from 'rxjs/operators';
 import { UserProperties } from '../model/user-properties';
-import { MainTasklyService } from 'src/app/main-taskly.service';
+import { MainTasklyService } from 'src/app/services/main-taskly.service';
 
 @Component({
   selector: 'app-task-list',
@@ -22,7 +22,7 @@ export class TaskListComponent {
   displayedColumns: string[] = ['name', 'category', 'priority', 'status'];
   tasks: Task[];
   finTaskModel: Task = new Task();
-  dataSource!: MatTableDataSource<Task>;
+  dataSource: MatTableDataSource<Task>;
   userId: number;
   username: string;
   role: string;
@@ -38,21 +38,24 @@ export class TaskListComponent {
   plusIcon = faPlus;
 
   constructor(private mainTasklyService: MainTasklyService,
-    private router: Router, private token: TokenService) {
-
-      this.mainTasklyService.decodeToken(token.getToken()).pipe(
-        concatMap((tokenData: UserProperties) => {
-          this.userProperties = tokenData;
-          this.userId = this.userProperties.id;
-          this.username = this.userProperties.username;
-          this.role = this.userProperties.role;
-          console.log("userID: " + this.userId + " username: " + this.username + " role: " + this.role);
-          return this.mainTasklyService.getUserTask(this.userId);
-        })
-      ).subscribe(data => {
-        this.dataSource = new MatTableDataSource(data);
-        console.log(this.dataSource);
-      });
+    private router: Router, private tokenService: TokenService) {
+      let token = this.tokenService.getToken();
+      if (token === null) {
+        this.mainTasklyService.decodeToken(this.tokenService.getToken()).pipe(
+          concatMap((tokenData: UserProperties) => {
+            this.userProperties = tokenData;
+            this.userId = this.userProperties.id;
+            this.username = this.userProperties.username;
+            this.role = this.userProperties.role;
+            return this.mainTasklyService.getUserTask(this.userId);
+          })
+        ).subscribe(data => {
+          this.dataSource = new MatTableDataSource(data);
+          console.log(this.dataSource);
+        });
+      } else {
+        this.router.navigate(['/login']);
+      }
   }
 
   ngAfterViewInit(): void {

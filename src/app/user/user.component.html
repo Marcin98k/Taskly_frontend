@@ -1,0 +1,40 @@
+
+    <div class="container">
+        <h3>Dashboard</h3>
+        <div class="small-part">
+            <div class="small-block">
+                <div class="block-text">
+                    <h4 *ngIf="userProperties">Welcome Back, {{userProperties.username}}</h4>
+                    <p>AppStack Dashbord</p>
+                </div>
+                <div class="block-img">
+                    <img src="assets/images/checklist-img.svg" alt="TODO">
+                </div>
+            </div>
+            <div class="small-block">
+                <div class="block-text">
+                    <h4>Task count</h4>
+                    <p>TASK COUNT</p>
+                </div>
+            </div>
+        </div>
+        <div class="large-part">
+            <button (click) ="showCurrentTasks()" type="checkbox">
+                <p style="float: left;">Current tasks</p>
+                <fa-icon [icon]="currentTasksVisible ? icArrowUp : icArrowDown"></fa-icon>
+            </button>
+            <div class="large-block" *ngIf="currentTasksVisible">
+                <app-task-list></app-task-list>
+            </div>
+        </div>
+
+        <div class="large-part">
+            <button (click) ="showFinishedTasks()" type="checkbox">
+                <p style="float: left;">Finished tasks</p>
+                <fa-icon [icon]="finishedTaskVisible ? icArrowUp : icArrowDown"></fa-icon>
+            </button>
+            <div class="large-block" *ngIf="finishedTaskVisible">
+                <app-task-list></app-task-list>
+            </div>
+        </div>
+    </div>

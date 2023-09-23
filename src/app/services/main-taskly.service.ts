@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Task } from './model/task';
+import { Task } from '../model/task';
 import * as moment from 'moment';
-import { User } from './model/user';
-import { UserProperties } from './model/user-properties';
+import { User } from '../model/user';
+import { UserProperties } from '../model/user-properties';
 import { TokenService } from './token.service';
 
 @Injectable({

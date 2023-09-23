@@ -20,6 +20,10 @@ export class TokenService {
     return this.token;
   }
 
+  isLogged() {
+    return this.getTokenFromLocal() !== null;
+  }
+
   saveTokenToLocal(token: string) {
     localStorage.setItem('tokenJWT', token);
   }

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../model/user';
-import { TokenService } from 'src/app/token.service';
+import { TokenService } from 'src/app/services/token.service';
 import { catchError, first, tap } from 'rxjs/operators';
 import { concat, of } from 'rxjs';
-import { MainTasklyService } from 'src/app/main-taskly.service';
+import { MainTasklyService } from 'src/app/services/main-taskly.service';
 
 @Component({
   selector: 'app-register',

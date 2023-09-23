@@ -6,6 +6,8 @@ import { TaskUpdateComponent } from './task-update/task-update.component';
 import { TaskDetailsComponent } from './task-details/task-details.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { UserComponent } from './user/user.component';
+import { SettingsComponent } from './settings/settings/settings.component';
 
 const routes: Routes = [
 { path: 'tasks', component: TaskListComponent },
@@ -14,7 +16,9 @@ const routes: Routes = [
 { path: 'task-details/:id', component: TaskDetailsComponent},
 { path: 'login', component: LoginComponent},
 { path: 'register', component: RegisterComponent},
-{ path: '', redirectTo: 'tasks', pathMatch: 'full' }
+{ path: 'user', component: UserComponent},
+{ path: 'settings', component: SettingsComponent},
+{ path: '', redirectTo: 'user', pathMatch: 'full' }
 ];
 
 @NgModule({

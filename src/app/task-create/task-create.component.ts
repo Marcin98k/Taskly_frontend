@@ -6,8 +6,8 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import * as moment from 'moment';
 import { UserProperties } from '../model/user-properties';
-import { TokenService } from 'src/app/token.service';
-import { MainTasklyService } from 'src/app/main-taskly.service';
+import { TokenService } from 'src/app/services/token.service';
+import { MainTasklyService } from 'src/app/services/main-taskly.service';
 
 @Component({
   selector: 'app-task-create',
@@ -52,7 +52,8 @@ export class TaskCreateComponent {
   task: Task = new Task();
 
   constructor(private mainTasklyService: MainTasklyService,
-    private router: Router, private formBuilder: FormBuilder, private tokenService: TokenService) {
+    private router: Router, private formBuilder: FormBuilder,
+    private tokenService: TokenService) {
     let token = this.tokenService.getToken();
     if (token) {
       this.mainTasklyService.decodeToken(token).subscribe((tokenData: UserProperties) => {
@@ -60,7 +61,6 @@ export class TaskCreateComponent {
         this.userId = this.userProperties.id;
       });
     } else {
-      console.error("Token is null");
       this.router.navigate(['/login']);
     }
   }

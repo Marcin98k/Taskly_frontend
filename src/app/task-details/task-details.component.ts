@@ -5,9 +5,9 @@ import {
   faSignature, faExclamation, faBullseye, faCalendar, faCalendarCheck,
   faScroll, faClipboard, faPlus
 } from '@fortawesome/free-solid-svg-icons';
-import { TokenService } from 'src/app/token.service';
+import { TokenService } from 'src/app/services/token.service';
 import { User } from '../model/user';
-import { MainTasklyService } from 'src/app/main-taskly.service';
+import { MainTasklyService } from 'src/app/services/main-taskly.service';
 
 @Component({
   selector: 'app-task-details',
@@ -33,7 +33,14 @@ export class TaskDetailsComponent {
   userId: number;
 
   constructor(private route: ActivatedRoute, private mainTasklyService: MainTasklyService,
-     private router: Router, private tokenService: TokenService) { }
+     private router: Router, private tokenService: TokenService) { 
+      let token = this.tokenService.getToken();
+      if (token !== null) {
+
+      } else {
+        this.router.navigate(['/login']);
+      }
+     }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];

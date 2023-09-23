@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { TokenService } from 'src/app/token.service';
+import { TokenService } from 'src/app/services/token.service';
 import { User } from '../model/user';
 import { Task } from '../model/task';
-import { MainTasklyService } from 'src/app/main-taskly.service';
+import { MainTasklyService } from 'src/app/services/main-taskly.service';
 
 @Component({
   selector: 'app-task-update',

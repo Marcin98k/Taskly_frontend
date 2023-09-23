@@ -22,7 +22,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-
+import { UserComponent } from './user/user.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { SettingsComponent } from './settings/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,9 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     TaskDetailsComponent,
     TaskListComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +59,11 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatFormFieldModule,
     MatInputModule,
     MatMomentDateModule,
-    MatTableModule
+    MatTableModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

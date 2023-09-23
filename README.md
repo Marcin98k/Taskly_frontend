@@ -31,5 +31,34 @@ The application uses the following dependencies:
 - moment: ^2.29.4
 - @fortawesome/free-solid-svg-icons: An icon library used in the project.
 
+## Before you start
+Before running the application, you must have installed:
+ - [Node.js](https://nodejs.org/en),
+ - Angular CLI (PowerShell)
+```npm install -g @angular/cli```
+
+Then you need to add some modules:
+Open the PowerShell terminal in your IDE where the project is located and navigate to the main application folder:
+Example(Visual Studio Code):
+![Module](https://github.com/Marcin98k/Taskly_frontend/assets/126909195/68a9ae7c-9322-481b-8666-7f5929ae458c)
+
+Add modules responsible for:
+ - Appearance:
+ ```
+ npm install --save @angular/material
+ npm install --save bootstrap
+ ```
+
+ - Icons:
+ ```
+ npm install --save @fortawesome/free-solid-svg-icons
+ npm install --save @fortawesome/angular-fontawesome
+ ```
+
+ - Date and time handling:
+ ```
+ npm install --save moment
+ npm install --save @angular/material-moment-adapter
+ ```
 ## Contact
 If you have any questions/suggestions about this project, please [contact me](marcin3009k@gmail.com).
