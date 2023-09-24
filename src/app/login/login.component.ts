@@ -36,7 +36,7 @@ export class LoginComponent {
   }
 
   goToMainPage() {
-    this.router.navigate(['/tasks']);
+    this.router.navigate(['/user']);
   }
 
   signInUser() {
@@ -54,8 +54,8 @@ export class LoginComponent {
         let jwtToken = responseObj.jwt;
         this.token.saveTokenToLocal(jwtToken);
         this.token.setToken(jwtToken);
-        console.log(jwtToken);
-        this.goToMainPage(); 
+        this.goToMainPage();
+        // location.reload();
       } else {
         console.log("NULL Login - > data");
       }

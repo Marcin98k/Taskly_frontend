@@ -28,8 +28,7 @@ export class TaskUpdateComponent {
   task: Task = new Task();
 
   constructor (private mainTasklyService: MainTasklyService,
-    private route: ActivatedRoute,
-    private router: Router,
+    private route: ActivatedRoute, private router: Router,
     private tokenService: TokenService) {}
 
   ngOnInit(): void {

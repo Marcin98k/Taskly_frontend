@@ -1,12 +1,30 @@
-.container {}
-
-.small-part {
-    width: 100%;
-    min-height: 200px;
+.heard-section fa-icon {
+    padding: 10px;
+}
+.welcome-block {
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 15px 0;
+}
+
+.inner-block{
+    flex: 1;
+}
+
+.welcome-block img {
+    height: 200px;
+}
+
+.small-block {
+    -webkit-box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.45);
+    -moz-box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.45);
+    box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.45);
+    margin: 10px 0;
+}
+.small-block h5{
+    margin: 10px 0;
+}
+.small-block a{
+    text-decoration: none;
 }
 
 .large-part {
@@ -15,35 +33,6 @@
     -webkit-box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.45);
     -moz-box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.45);
     box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.45);
-}
-
-.small-block {
-    min-height: 150px;
-    width: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 15px 0;
-    float: left;
-    margin: 5px 15px;
-    -webkit-box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.45);
-    -moz-box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.45);
-    box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.45);
-}
-
-.block-text {
-    float: left;
-    width: 60%;
-    text-align: center;
-}
-
-.block-img {
-    float: left;
-    width: 40%;
-}
-
-.block-img img {
-    height: 128px;
 }
 
 .large-part button {

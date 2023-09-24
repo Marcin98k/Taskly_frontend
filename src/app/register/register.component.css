@@ -28,8 +28,7 @@
 }
 
 .register-part:first-child {
-    background: rgb(6, 0, 101);
-    background: linear-gradient(90deg, rgba(6, 0, 101, 1) 0%, rgba(0, 0, 255, 1) 50%, rgba(0, 212, 255, 1) 100%);
+    background: linear-gradient(90deg, rgba(20, 46, 70, 1) 0%, rgba(20, 46, 70, 1) 30%, rgba(61, 152, 170, 1) 100%);
     color: white;
 }
 

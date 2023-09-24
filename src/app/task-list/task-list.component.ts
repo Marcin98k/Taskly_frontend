@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
 import { Task } from '../model/task';
 import { Router } from '@angular/router';
 import {
@@ -6,9 +6,6 @@ import {
   faScroll, faClipboard, faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { MatTableDataSource } from '@angular/material/table'
-import { TokenService } from 'src/app/services/token.service';
-import { concatMap } from 'rxjs/operators';
-import { UserProperties } from '../model/user-properties';
 import { MainTasklyService } from 'src/app/services/main-taskly.service';
 
 @Component({
@@ -18,15 +15,11 @@ import { MainTasklyService } from 'src/app/services/main-taskly.service';
 })
 export class TaskListComponent {
 
-  
+
   displayedColumns: string[] = ['name', 'category', 'priority', 'status'];
-  tasks: Task[];
+  @Input() tasks: Task[];
   finTaskModel: Task = new Task();
   dataSource: MatTableDataSource<Task>;
-  userId: number;
-  username: string;
-  role: string;
-  userProperties: UserProperties = new UserProperties();
 
   nameIcon = faSignature;
   priorityIcon = faExclamation;
@@ -38,31 +31,23 @@ export class TaskListComponent {
   plusIcon = faPlus;
 
   constructor(private mainTasklyService: MainTasklyService,
-    private router: Router, private tokenService: TokenService) {
-      let token = this.tokenService.getToken();
-      if (token === null) {
-        this.mainTasklyService.decodeToken(this.tokenService.getToken()).pipe(
-          concatMap((tokenData: UserProperties) => {
-            this.userProperties = tokenData;
-            this.userId = this.userProperties.id;
-            this.username = this.userProperties.username;
-            this.role = this.userProperties.role;
-            return this.mainTasklyService.getUserTask(this.userId);
-          })
-        ).subscribe(data => {
-          this.dataSource = new MatTableDataSource(data);
-          console.log(this.dataSource);
-        });
-      } else {
-        this.router.navigate(['/login']);
-      }
+    private router: Router, private ctf: ChangeDetectorRef) {
   }
 
   ngAfterViewInit(): void {
-
+    this.dataSource = new MatTableDataSource(this.tasks);
+    this.ctf.detectChanges();
   }
 
   ngOnInit(): void {
+    this.dataSource = new MatTableDataSource(this.tasks);
+    this.ctf.detectChanges();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['tasks'] && changes['tasks'].currentValue) {
+      this.dataSource = new MatTableDataSource(this.tasks);
+    }
   }
 
   applyFilter(event: Event) {
@@ -78,12 +63,6 @@ export class TaskListComponent {
     return this.mainTasklyService.showDateTime(date);
   }
 
-  private getTasks() {
-    this.mainTasklyService.getTaskList().subscribe(data => {
-      this.tasks = data;
-    });
-  }
-
   createTask() {
     this.router.navigate(['create-task']);
   }
@@ -93,9 +72,7 @@ export class TaskListComponent {
   }
 
   deleteTask(id: number) {
-    this.mainTasklyService.deleteTask(id).subscribe(data => {
-      this.getTasks();
-    });
+    this.mainTasklyService.deleteTask(id).subscribe(data => {});
   }
 
   taskDetails(id: number) {

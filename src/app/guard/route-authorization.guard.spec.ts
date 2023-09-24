@@ -1,17 +1,23 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import { routeAuthorizationGuard } from './route-authorization.guard';
+import { RouteAuthorizationGuard } from './route-authorization.guard';
 
-describe('routeAuthorizationGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => routeAuthorizationGuard(...guardParameters));
+describe('RouteAuthorizationGuard', () => {
+  let guard: RouteAuthorizationGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
+    guard = TestBed.inject(RouteAuthorizationGuard);
   });
 
   it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
+    expect(guard).toBeTruthy();
+  });
+
+  it('should return true for canActivate', () => {
+    const route = {} as ActivatedRouteSnapshot;
+    const state = {} as RouterStateSnapshot;
+    expect(guard.canActivate(route, state)).toBeTrue();
   });
 });

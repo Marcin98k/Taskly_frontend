@@ -16,7 +16,7 @@ import { MainTasklyService } from 'src/app/services/main-taskly.service';
 })
 export class TaskCreateComponent {
 
-  
+
   arrow = faAngleDown;
 
   createTask: FormGroup;
@@ -54,15 +54,10 @@ export class TaskCreateComponent {
   constructor(private mainTasklyService: MainTasklyService,
     private router: Router, private formBuilder: FormBuilder,
     private tokenService: TokenService) {
-    let token = this.tokenService.getToken();
-    if (token) {
-      this.mainTasklyService.decodeToken(token).subscribe((tokenData: UserProperties) => {
-        this.userProperties = tokenData;
-        this.userId = this.userProperties.id;
-      });
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.mainTasklyService.decodeToken(this.tokenService.getToken()).subscribe((tokenData: UserProperties) => {
+      this.userProperties = tokenData;
+      this.userId = this.userProperties.id;
+    });
   }
 
   ngOnInit(): void {

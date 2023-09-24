@@ -1,5 +1,5 @@
 mat-toolbar {
-    background: linear-gradient(90deg, rgba(25, 35, 45, 1) 0%, rgba(9, 47, 83, 1) 100%);
+    background: linear-gradient(90deg, rgba(20, 46, 70, 1) 0%, rgba(20, 46, 70, 1) 30%, rgba(61, 152, 170, 1) 100%);
     color: white;
     display: flex;
     align-items: center;
@@ -21,7 +21,8 @@ mat-toolbar h4 {
 mat-sidenav {
     width: 200px;
     border-right: none;
-    background: rgba(25, 35, 45, 1);
+    /* background: rgba(25, 35, 45, 1); */
+    background: rgba(20, 46, 70, 1);
     color: white;
     text-align: center;
 }

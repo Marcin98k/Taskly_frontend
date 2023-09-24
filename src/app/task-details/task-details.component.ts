@@ -33,14 +33,7 @@ export class TaskDetailsComponent {
   userId: number;
 
   constructor(private route: ActivatedRoute, private mainTasklyService: MainTasklyService,
-     private router: Router, private tokenService: TokenService) { 
-      let token = this.tokenService.getToken();
-      if (token !== null) {
-
-      } else {
-        this.router.navigate(['/login']);
-      }
-     }
+     private router: Router, private tokenService: TokenService) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];

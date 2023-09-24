@@ -21,11 +21,11 @@ export class TokenService {
   }
 
   isLogged() {
-    return this.getTokenFromLocal() !== null;
+    return this.getTokenFromLocal() !== null && '';
   }
 
   saveTokenToLocal(token: string) {
-    localStorage.setItem('tokenJWT', token);
+    return localStorage.setItem('tokenJWT', token);
   }
 
   getTokenFromLocal(): string | null {
@@ -33,6 +33,6 @@ export class TokenService {
   }
 
   removeTokenFromLocal() {
-    localStorage.removeItem('tokenJWT');
+    return localStorage.removeItem('tokenJWT');
   }
 }

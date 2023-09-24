@@ -6,7 +6,7 @@ import { BreakpointObserver } from '@angular/cdk/layout'
 import { UserProperties } from './model/user-properties';
 import { MainTasklyService } from './services/main-taskly.service';
 import { TokenService } from './services/token.service';
-import { faDashboard, faGears, faHome, faList, faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowDown19, faBriefcase, faChevronDown, faDashboard, faGears, faHome, faList, faPaperPlane, faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 
 export const MY_DATE_FORMAT = {
@@ -33,11 +33,16 @@ export class AppComponent {
   @ViewChild(MatSidenav)
   sidenav: MatSidenav;
 
+  // Icons
   plusIcon = faPlus;
   listIcon = faList;
-  dashboardIcon = faHome;
+  dashboardIcon = faDashboard;
   settingsIcon = faGears;
   signOutIcon = faSignOut;
+  homeIcon = faHome;
+  workIcon = faBriefcase;
+  elseIcon = faPaperPlane;
+  arrowDownIcon = faChevronDown;
 
   token: string | null;
 
@@ -66,8 +71,14 @@ export class AppComponent {
     })
   }
 
+  isLoggedIn() {
+    this.sidenav.mode = 'over';
+    return this.tokenService.isLogged();
+  }
+
   signOut() {
     this.tokenService.setToken('');
     this.router.navigate(['/login']);
+    location.reload();
   }
 }
