@@ -60,5 +60,8 @@ Add modules responsible for:
  npm install --save moment
  npm install --save @angular/material-moment-adapter
  ```
+
+## In the future
+ - Dynamic display of categories from the database in the menu.
 ## Contact
 If you have any questions/suggestions about this project, please [contact me](marcin3009k@gmail.com).
