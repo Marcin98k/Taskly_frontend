@@ -9,15 +9,15 @@
         </div>
         <div class="details-sub-container second" style="width: 35%;">
             <h6>Category:</h6>
-            <p>{{task.category}}</p>
+            <p>{{task.category?.value}}</p>
             <h6>Start:</h6>
-            <p>{{task.startDate}}</p>
+            <p>{{task.dateAdded}}</p>
             <h6>End:</h6>
-            <p>{{task.endDate}}</p>
+            <p>{{task.taskDate}}</p>
             <h6>Priority</h6>
-            <p>{{task.priority}}</p>
+            <p>{{task.priority?.value}}</p>
             <h6>State</h6>
-            <p>{{task.state}}</p>
+            <p>{{task.status?.value}}</p>
         </div>
         <div class="details-btn">
             <table>

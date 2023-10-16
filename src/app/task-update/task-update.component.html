@@ -13,18 +13,18 @@
             </div>
             <div class="form-group">
                 <label>Start date:</label>
-                <input type="datetime-local" class="form-control" id="task-start-date" [(ngModel)]="task.startDate"
+                <input type="datetime-local" class="form-control" id="task-start-date" [(ngModel)]="task.dateAdded"
                     name="task-start-date" />
             </div>
             <div class="form-group">
                 <label>End date:</label>
-                <input type="datetime-local" class="form-control" id="task-end-date" [(ngModel)]="task.endDate"
+                <input type="datetime-local" class="form-control" id="task-end-date" [(ngModel)]="task.taskDate"
                     name="task-end-date" />
             </div>
             <div class="form-group">
                 <label>State:</label>
-                <select [formControl]="statesSelectedValues">
-                    <option *ngFor="let value of statesEnumsValues" [value]="value" id="task-state" name="task-state">
+                <select [formControl]="statusSelectedValues">
+                    <option *ngFor="let value of statusValues" [value]="value" id="task-state" name="task-status">
                         {{ value }}
                     </option>
                 </select>
@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label>Priority:</label>
                 <select [formControl]="prioritiesSelectedValues">
-                    <option *ngFor="let value of prioritiesEnumsValues" [value]="value" id="task-priority"
+                    <option *ngFor="let value of prioritiesValues" [value]="value" id="task-priority"
                         name="task-priority">
                         {{ value }}
                     </option>
@@ -41,7 +41,7 @@
             <div class="form-group">
                 <label>Category:</label>
                 <select [formControl]="categoriesSelectedValues">
-                    <option *ngFor="let value of categoriesEnumsValues" [value]="value" id="task-category"
+                    <option *ngFor="let value of categoriesValues" [value]="value" id="task-category"
                         name="task-category">
                         {{ value }}
                     </option>

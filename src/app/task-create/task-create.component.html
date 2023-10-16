@@ -37,25 +37,25 @@
                     <mat-form-field style="float: left; width: 33%;">
                         <mat-label>Select category</mat-label>
                         <mat-select [formControl]="categoriesSelectedValues" required>
-                            <mat-option *ngFor="let value of categoriesEnumsValues" [value]="value" id="taskCategory"
-                                name="taskCategory">{{ value }}</mat-option>
+                            <mat-option *ngFor="let value of categoryValues" [value]="value.name" id="taskCategory"
+                                name="taskCategory">{{ value.value }}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="categoryControl.hasError('required')">Choose category</mat-error>
                     </mat-form-field>
                     <mat-form-field style="float: left; width: 33%;">
-                        <mat-label>Select state</mat-label>
+                        <mat-label>Select status</mat-label>
                         <mat-select [formControl]="statesSelectedValues" required>
-                            <mat-option *ngFor="let value of statesEnumsValues" [value]="value" id="taskState"
-                                name="taskState">{{
-                                value }}</mat-option>
+                            <mat-option *ngFor="let value of statusValues" [value]="value.name" id="taskStatus"
+                                name="taskStatus">{{
+                                value.value }}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="stateControl.hasError('required')">Choose state</mat-error>
                     </mat-form-field>
                     <mat-form-field style="float: left; width: 33%;">
                         <mat-label>Select priority</mat-label>
                         <mat-select [formControl]="prioritiesSelectedValues" required>
-                            <mat-option *ngFor="let value of prioritiesEnumsValues" [value]="value" id="taskPriority"
-                                name="taskPriority">{{ value }}</mat-option>
+                            <mat-option *ngFor="let value of priorityValues" [value]="value.name" id="taskPriority"
+                                name="taskPriority">{{ value.value }}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="priorityControl.hasError('required')">Choose priority</mat-error>
                     </mat-form-field>
@@ -70,8 +70,8 @@
                         <mat-label>Select task type</mat-label>
                         <mat-select [formControl]="typeSelectedValues" [disabled]="disableReminding.value || false"
                             required>
-                            <mat-option *ngFor="let value of typeEnumsValues" [value]="value" id="taskType"
-                                name="taskType">{{ value }}</mat-option>
+                            <mat-option *ngFor="let value of typeValues" [value]="value.name" id="taskType"
+                                name="taskType">{{ value.value }}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="typeControl.hasError('required')">Choose task type</mat-error>
                     </mat-form-field>

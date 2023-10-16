@@ -36,6 +36,7 @@ export class TaskListComponent {
 
   ngAfterViewInit(): void {
     this.dataSource = new MatTableDataSource(this.tasks);
+    console.log(this.tasks);
     this.ctf.detectChanges();
   }
 
@@ -60,7 +61,7 @@ export class TaskListComponent {
   }
 
   showDateTime(date: string) {
-    return this.mainTasklyService.showDateTime(date);
+    return this.mainTasklyService.formatDate(date);
   }
 
   createTask() {
@@ -80,7 +81,7 @@ export class TaskListComponent {
   }
 
   finishTask(id: number) {
-    this.finTaskModel.state = "Finished";
+    this.finTaskModel.status.name = "Finished";
     this.mainTasklyService.partlyChangeTask(id, this.finTaskModel).subscribe(data => {
       this.router.navigate(['/tasks']);
     });

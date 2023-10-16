@@ -6,32 +6,32 @@ import * as moment from 'moment';
 import { User } from '../model/user';
 import { UserProperties } from '../model/user-properties';
 import { TokenService } from './token.service';
+import { TaskOptions } from '../model/task-options';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainTasklyService {
-  private baseURL = "http://localhost:8080/api/v1/showAllTasks";
-  private userTaskURL = "http://localhost:8080/api/v1/showUserTasks";
-  private completeTasksURL = "http://localhost:8080/api/v1/showAllCompletedTasks"
-  private currentTaskURL = "http://localhost:8080/api/v1/showCurrentTasks"
-  private countAllTasksURL = 'http://localhost:8080/api/v1/countAllTask';
-  private countActiveTasksURL = 'http://localhost:8080/api/v1/countActiveTask';
-  private countCompletedTasksURL = 'http://localhost:8080/api/v1/countCompletedTask';
+  private baseURL = "http://localhost:8080/task";
+  private userTaskURL = "http://localhost:8080/task/showUserTasks";
+  private completeTasksURL = "http://localhost:8080/task/showAllCompletedTasks"
+  private currentTaskURL = "http://localhost:8080/task/showCurrentTasks"
+  private taskByCategory = "http://localhost:8080/task/showTaskByCategory"
 
-  private stateURL = "http://localhost:8080/enum/task-state";
-  private priorityURL = "http://localhost:8080/enum/task-priority";
-  private categoryURL = "http://localhost:8080/enum/task-categories";
-  // private periodURL = "http://localhost:8080/enum/task-period";
-  private typeURL = "http://localhost:8080/enum/task-type";
+  private countAllTasksURL = 'http://localhost:8080/task/countAllTask';
+  private countActiveTasksURL = 'http://localhost:8080/task/countActiveTask';
+  private countCompletedTasksURL = 'http://localhost:8080/task/countCompletedTask';
+
+  private statusURL = "http://localhost:8080/options/status";
+  private priorityURL = "http://localhost:8080/options/priority";
+  private categoryURL = "http://localhost:8080/options/category";
+  private typeURL = "http://localhost:8080/options/type";
   
-  private loginURL = "http://localhost:8080/auth/login";
-  private registerURL = "http://localhost:8080/auth/register";
+  private signInURL = "http://localhost:8080/auth/login";
+  private signUpURL = "http://localhost:8080/auth/register";
   private tokenURL = "http://localhost:8080/auth/token";
-
   private adminUrl = '';
   private userUrl = '';
-  private showUser = '';
 
   private getHeaders() {
     return new HttpHeaders().set('Authorization', 'Bearer ' + this.tokenService.getToken());
@@ -60,6 +60,11 @@ export class MainTasklyService {
     return this.httpClient.get<Task[]>(`${this.currentTaskURL}/${userId}`, {headers:this.getHeaders()});
   }
 
+  // getTaskByCategory(userId: number, category: string) {
+  //   return this.httpClient.post<Task[]>(`${this.taskByCategory}/${userId}`, {category: category}, {headers:this.getHeaders()});
+  // }
+
+  // Count
   getAllTaskCount(userId: number) {
     return this.httpClient.get<number>(`${this.countAllTasksURL}/${userId}`, {headers: this.getHeaders()});
   }
@@ -72,21 +77,20 @@ export class MainTasklyService {
     return this.httpClient.get<number>(`${this.countActiveTasksURL}/${userId}`, {headers: this.getHeaders()});
   }
 
-  getStatesList(): Observable<string[]>{
-    return this.httpClient.get<string[]>(`${this.stateURL}`, {headers: this.getHeaders()});
+  getStatusList(): Observable<TaskOptions[]>{
+    return this.httpClient.get<TaskOptions[]>(`${this.statusURL}`, {headers: this.getHeaders()});
   }
 
-  // Enums
-  getTaskPrioritiesList(): Observable<string[]>{
-    return this.httpClient.get<string[]>(`${this.priorityURL}`, {headers: this.getHeaders()});
+  getPriorityList(): Observable<TaskOptions[]>{
+    return this.httpClient.get<TaskOptions[]>(`${this.priorityURL}`, {headers: this.getHeaders()});
   }
 
-  getTaskCategoriesList(): Observable<string[]>{
-    return this.httpClient.get<string[]>(`${this.categoryURL}`, {headers: this.getHeaders()});
+  getCategoryList(): Observable<TaskOptions[]>{
+    return this.httpClient.get<TaskOptions[]>(`${this.categoryURL}`, {headers: this.getHeaders()});
   }
 
-  getTaskTypeList(): Observable<string[]> {
-    return this.httpClient.get<string[]>(`${this.typeURL}`, {headers: this.getHeaders()});
+  getTypeList(): Observable<TaskOptions[]> {
+    return this.httpClient.get<TaskOptions[]>(`${this.typeURL}`, {headers: this.getHeaders()});
   }
   
   // Activities on tasks
@@ -108,11 +112,11 @@ export class MainTasklyService {
 
   // Account activities
   signInUser(user: User): Observable<string>{
-    return this.httpClient.post(`${this.loginURL}`, user, { responseType: 'text' });
+    return this.httpClient.post(`${this.signInURL}`, user, { responseType: 'text' });
   }
 
   signUpUser(user: User) {
-    return this.httpClient.post(`${this.registerURL}`, user);
+    return this.httpClient.post(`${this.signUpURL}`, user);
   }
 
   decodeToken(token: string | null): Observable<UserProperties> {
@@ -122,16 +126,16 @@ export class MainTasklyService {
   // Internal methods
   formatDate(date: string) {
     const newDate = new Date(new Date(date).setSeconds(0));
-    const formattedDate = moment(newDate).format("YYYY-MM-DD HH:mm:ss");
+    const formattedDate = moment(newDate).format("YYYY-MM-DDTHH:mm:ss");
     return formattedDate;
   }
 
-  showDateTime(date: string) {
+  getDateBy(date: string) {
     const formattedDate = moment(date).format("YYYY-MM-DD");
     return formattedDate;
   }
   
-  showTime(date: string) {
+  getHour(date: string) {
     const formattedDate = moment(date).format("HH:mm:ss");
     return formattedDate;
   }

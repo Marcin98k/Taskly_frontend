@@ -6,6 +6,7 @@ import { TokenService } from 'src/app/services/token.service';
 import { catchError, first } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MainTasklyService } from 'src/app/services/main-taskly.service';
+import { AppComponent } from '../app.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -22,7 +23,8 @@ export class LoginComponent {
   passwordControl = new FormControl(null, Validators.required);
 
   constructor(private mainTasklyService: MainTasklyService,
-    private router: Router, private formBuilder: FormBuilder, private token: TokenService) { }
+    private router: Router, private formBuilder: FormBuilder,
+    private token: TokenService) { }
 
   ngOnInit(): void {
     this.signIn = this.formBuilder.group({
@@ -55,7 +57,6 @@ export class LoginComponent {
         this.token.saveTokenToLocal(jwtToken);
         this.token.setToken(jwtToken);
         this.goToMainPage();
-        // location.reload();
       } else {
         console.log("NULL Login - > data");
       }

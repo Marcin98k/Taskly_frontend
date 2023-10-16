@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Task } from '../model/task';
 import {
   faSignature, faExclamation, faBullseye, faCalendar, faCalendarCheck,
   faScroll, faClipboard, faPlus
 } from '@fortawesome/free-solid-svg-icons';
-import { TokenService } from 'src/app/services/token.service';
-import { User } from '../model/user';
 import { MainTasklyService } from 'src/app/services/main-taskly.service';
 
 @Component({
@@ -33,7 +31,7 @@ export class TaskDetailsComponent {
   userId: number;
 
   constructor(private route: ActivatedRoute, private mainTasklyService: MainTasklyService,
-     private router: Router, private tokenService: TokenService) {}
+     private router: Router) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
@@ -41,11 +39,13 @@ export class TaskDetailsComponent {
     this.task = new Task();
     this.mainTasklyService.getTaskById(this.id).subscribe(data => {
       this.task = data;
+      this.task.dateAdded = this.showDateTime(data.dateAdded);
+      this.task.taskDate = this.showDateTime(data.taskDate);
     })
   }
 
   showDateTime(date: string) {
-    return this.mainTasklyService.showDateTime(date);
+    return this.mainTasklyService.getDateBy(date);
   }
 
   updateTask(id: number) {
@@ -59,7 +59,7 @@ export class TaskDetailsComponent {
   }
 
   finishTask(id: number) {
-    this.finTaskModel.state = "FINISHED";
+    this.finTaskModel.status.name = "FINISHED";
     this.mainTasklyService.partlyChangeTask(id, this.finTaskModel).subscribe(data => {
       this.router.navigate(['/tasks']);
     });

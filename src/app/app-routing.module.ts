@@ -8,8 +8,10 @@ import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { SettingsComponent } from './settings/settings/settings.component';
 import { RouteAuthorizationGuard } from './guard/route-authorization.guard';
+import { TaskListComponent } from './task-list/task-list.component';
 
 const routes: Routes = [
+{ path : 'tasks', component: TaskListComponent, canActivate: [RouteAuthorizationGuard]},
 { path: 'create-task', component: TaskCreateComponent , canActivate: [RouteAuthorizationGuard] },
 { path: 'update-task/:id', component: TaskUpdateComponent , canActivate: [RouteAuthorizationGuard] },
 { path: 'task-details/:id', component: TaskDetailsComponent , canActivate: [RouteAuthorizationGuard] },
@@ -21,7 +23,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

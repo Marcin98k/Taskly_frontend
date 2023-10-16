@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Task } from '../model/task';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { UserProperties } from '../model/user-properties';
 import { TokenService } from 'src/app/services/token.service';
 import { MainTasklyService } from 'src/app/services/main-taskly.service';
+import { TaskOptions } from '../model/task-options';
 
 @Component({
   selector: 'app-task-create',
@@ -18,30 +19,24 @@ export class TaskCreateComponent {
 
 
   arrow = faAngleDown;
-
-  createTask: FormGroup;
+  defaultTime = '9:30';
 
   userProperties: UserProperties = new UserProperties();
+  task: Task = new Task();
+
   userId: number;
+
+  createTask: FormGroup;
 
   stateControl = new FormControl(null, Validators.required);
   categoryControl = new FormControl(null, Validators.required);
   priorityControl = new FormControl(null, Validators.required);
   periodOfTimeControl = new FormControl(null, Validators.required);
   typeControl = new FormControl(null, Validators.required);
-
   disableReminding = new FormControl(false);
-
-  defaultTime = '9:30';
 
   public picker1: MatDatepicker<Date>;
   public picker2: MatDatepicker<Date>;
-
-  statesEnumsValues: string[] = [];
-  prioritiesEnumsValues: string[] = [];
-  categoriesEnumsValues: string[] = [];
-  periodOfTimeEnumsValues: string[] = [];
-  typeEnumsValues: string[] = [];
 
   statesSelectedValues = new FormControl();
   prioritiesSelectedValues = new FormControl();
@@ -49,7 +44,10 @@ export class TaskCreateComponent {
   periodOfTimeSelectedValues = new FormControl();
   typeSelectedValues = new FormControl();
 
-  task: Task = new Task();
+  statusValues: TaskOptions[] = [];
+  priorityValues: TaskOptions[] = [];
+  categoryValues: TaskOptions[] = [];
+  typeValues: TaskOptions[] = [];
 
   constructor(private mainTasklyService: MainTasklyService,
     private router: Router, private formBuilder: FormBuilder,
@@ -61,15 +59,15 @@ export class TaskCreateComponent {
   }
 
   ngOnInit(): void {
-    this.getStatesEnums();
-    this.getPrioritiesEnums();
-    this.getCategoriesEnums();
-    this.getTypeEnums();
+    this.getStatus();
+    this.getPriority();
+    this.getCategory();
+    this.getType();
 
-    this.setValueState();
-    this.setValuePriority();
-    this.setValueCategory();
-    this.setValueType();
+    this.setStatus();
+    this.setPriority();
+    this.setCategory();
+    this.setType();
 
     this.createTask = this.formBuilder.group({
       taskName: [''],
@@ -85,49 +83,50 @@ export class TaskCreateComponent {
     this.saveTask();
   }
 
-  private getStatesEnums() {
-    this.mainTasklyService.getStatesList().subscribe(data => {
-      this.statesEnumsValues = data;
+  private getStatus() {
+    this.mainTasklyService.getStatusList().subscribe(data => {
+      console.log(data);
+      this.statusValues = data;
     });
   }
 
-  private getPrioritiesEnums() {
-    this.mainTasklyService.getTaskPrioritiesList().subscribe(data => {
-      this.prioritiesEnumsValues = data;
+  private getPriority() {
+    this.mainTasklyService.getPriorityList().subscribe(data => {
+      this.priorityValues = data;
     });
   }
 
-  private getCategoriesEnums() {
-    this.mainTasklyService.getTaskCategoriesList().subscribe(data => {
-      this.categoriesEnumsValues = data;
+  private getCategory() {
+    this.mainTasklyService.getCategoryList().subscribe(data => {
+      this.categoryValues = data;
     });
   }
 
-  private getTypeEnums() {
-    this.mainTasklyService.getTaskTypeList().subscribe(data => {
-      this.typeEnumsValues = data;
+  private getType() {
+    this.mainTasklyService.getTypeList().subscribe(data => {
+      this.typeValues = data;
     })
   }
 
-  private setValueState() {
+  private setStatus() {
     this.statesSelectedValues.valueChanges.subscribe(value => {
-      this.task.state = value;
+      this.task.status = value;
     });
   }
 
-  private setValuePriority() {
+  private setPriority() {
     this.prioritiesSelectedValues.valueChanges.subscribe(value => {
       this.task.priority = value;
     });
   }
 
-  private setValueCategory() {
+  private setCategory() {
     this.categoriesSelectedValues.valueChanges.subscribe(value => {
       this.task.category = value;
     });
   }
 
-  private setValueType() {
+  private setType() {
     this.typeSelectedValues.valueChanges.subscribe(value => {
       this.task.type = value;
     })
@@ -145,8 +144,10 @@ export class TaskCreateComponent {
     const taskHour = this.createTask.get('taskTime')?.value;
     const endDate = this.createTask.get('taskEnd')?.value;
 
-    this.task.startDate = this.mainTasklyService.formatDate(this.convertDate(startDate, taskHour));
-    this.task.endDate = this.mainTasklyService.formatDate(this.convertDate(endDate, taskHour));
+    console.log(this.mainTasklyService.formatDate(this.convertDate(startDate, taskHour)));
+    console.log(this.mainTasklyService.formatDate(this.convertDate(endDate, taskHour)));
+    this.task.dateAdded = this.mainTasklyService.formatDate(this.convertDate(startDate, taskHour));
+    this.task.taskDate = this.mainTasklyService.formatDate(this.convertDate(endDate, taskHour));
     this.task.remidnerTime = this.createTask.get('taskReminderTime')?.value;
     this.task.userId = this.userId;
 
@@ -158,6 +159,6 @@ export class TaskCreateComponent {
   convertDate(date: moment.Moment, time: string) {
     let former = date.format('YYYY-MM-DD');
     console.log(former);
-    return former + " " + time;
+    return former + ' ' + time;
   }
 }

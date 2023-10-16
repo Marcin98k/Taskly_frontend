@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -6,7 +6,7 @@ import { BreakpointObserver } from '@angular/cdk/layout'
 import { UserProperties } from './model/user-properties';
 import { MainTasklyService } from './services/main-taskly.service';
 import { TokenService } from './services/token.service';
-import { faArrowDown, faArrowDown19, faBriefcase, faChevronDown, faDashboard, faGears, faHome, faList, faPaperPlane, faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faBriefcase, faChevronDown, faDashboard, faGears, faHome, faList, faPaperPlane, faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 
 export const MY_DATE_FORMAT = {
@@ -24,8 +24,8 @@ export const MY_DATE_FORMAT = {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT }]
+  providers: [{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+  { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT }]
 
 })
 export class AppComponent {
@@ -48,15 +48,15 @@ export class AppComponent {
 
   userProperties: UserProperties;
 
-  constructor (private observer: BreakpointObserver,
-     private mainTasklyService: MainTasklyService, private tokenService: TokenService,
-     private router: Router) {
-      this.token = tokenService.getToken();
-      if (this.token !== null) {
-        this.mainTasklyService.decodeToken(this.token).subscribe(data => {
-          this.userProperties = data;
-        })
-      }
+  constructor(private observer: BreakpointObserver,
+    private mainTasklyService: MainTasklyService, private tokenService: TokenService,
+    private router: Router, private cd :ChangeDetectorRef) {
+    this.token = tokenService.getToken();
+    if (this.token !== null) {
+      this.mainTasklyService.decodeToken(this.token).subscribe(data => {
+        this.userProperties = data;
+      })
+    }
   }
 
   ngAfterViewInit() {
@@ -68,6 +68,7 @@ export class AppComponent {
         this.sidenav.mode = 'side';
         this.sidenav.open();
       }
+      this.cd.detectChanges();
     })
   }
 
@@ -79,6 +80,5 @@ export class AppComponent {
   signOut() {
     this.tokenService.setToken('');
     this.router.navigate(['/login']);
-    location.reload();
   }
 }

@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { TokenService } from 'src/app/services/token.service';
-import { User } from '../model/user';
 import { Task } from '../model/task';
 import { MainTasklyService } from 'src/app/services/main-taskly.service';
+import { TaskOptions } from '../model/task-options';
 
 @Component({
   selector: 'app-task-update',
@@ -13,45 +12,43 @@ import { MainTasklyService } from 'src/app/services/main-taskly.service';
 })
 export class TaskUpdateComponent {
 
-  
   id: number;
   userId: number;
   
-  statesEnumsValues: string[] = [];
-  prioritiesEnumsValues: string[] = [];
-  categoriesEnumsValues: string[] = [];
+  statusValues: TaskOptions[] = [];
+  prioritiesValues: TaskOptions[] = [];
+  categoriesValues: TaskOptions[] = [];
 
-  statesSelectedValues = new FormControl();
+  statusSelectedValues = new FormControl();
   prioritiesSelectedValues = new FormControl();
   categoriesSelectedValues = new FormControl();
   
   task: Task = new Task();
 
   constructor (private mainTasklyService: MainTasklyService,
-    private route: ActivatedRoute, private router: Router,
-    private tokenService: TokenService) {}
+    private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
 
     this.mainTasklyService.getTaskById(this.id).subscribe(data => {
       this.task = data;
-      this.statesSelectedValues.setValue(this.task.state);
+      this.statusSelectedValues.setValue(this.task.status);
       this.prioritiesSelectedValues.setValue(this.task.priority);
       this.categoriesSelectedValues.setValue(this.task.category);
     });
 
-    this.getStatesEnums();
-    this.getPrioritiesEnums();
-    this.getCategoriesEnums();
-    this.setValueState();
+    this.getStatus();
+    this.getPriorities();
+    this.getCategories();
+    this.setValueStatus();
     this.setValuePriority();
     this.setValueCategory();
   }
 
   ngSubmit() {
-    this.task.startDate = this.mainTasklyService.formatDate(this.task.startDate);
-    this.task.endDate = this.mainTasklyService.formatDate(this.task.endDate);
+    this.task.dateAdded = this.mainTasklyService.formatDate(this.task.dateAdded);
+    this.task.taskDate = this.mainTasklyService.formatDate(this.task.taskDate);
     this.mainTasklyService.updateTask(this.id, this.task).subscribe(data => {
       this.gotToTaskList();
     });
@@ -61,29 +58,27 @@ export class TaskUpdateComponent {
     this.router.navigate(['/tasks']);
   }
 
-  private getStatesEnums() {
-    this.mainTasklyService.getStatesList().subscribe(data => {
-      this.statesEnumsValues = data;
+  private getStatus() {
+    this.mainTasklyService.getStatusList().subscribe(data => {
+      this.statusValues = data;
     });
   }
 
-  private getPrioritiesEnums() {
-    this.mainTasklyService.getTaskPrioritiesList().subscribe(data => {
-      this.prioritiesEnumsValues = data;
+  private getPriorities() {
+    this.mainTasklyService.getPriorityList().subscribe(data => {
+      this.prioritiesValues = data;
     });
   }
 
-  private getCategoriesEnums() {
-    this.mainTasklyService.getTaskCategoriesList().subscribe(data => {
-      this.categoriesEnumsValues = data;
+  private getCategories() {
+    this.mainTasklyService.getCategoryList().subscribe(data => {
+      this.categoriesValues = data;
     });
   }
 
-  private setValueState() {
-    this.statesSelectedValues.valueChanges.subscribe(value => {
-      console.log(typeof(value));
-      console.log(typeof(this.task.state));
-      this.task.state = value;
+  private setValueStatus() {
+    this.statusSelectedValues.valueChanges.subscribe(value => {
+      this.task.status = value;
     });
   }
 

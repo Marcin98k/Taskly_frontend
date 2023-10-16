@@ -1,22 +1,22 @@
+import { TaskOptions } from "./task-options";
+
 export class Task {
 
-    // Long
     id: number;
     userId: number;
 
-    // String
     name: string;
     note: string;
     remidnerTime: string;
 
-    // Date
-    startDate: string;
-    endDate: string;
+    dateAdded: string;
+    taskDate: string;
 
-    // Enums
-    state: string;
-    priority: string;
-    category: string;
-    period: string;
-    type: string;
+    status: TaskOptions;
+    priority: TaskOptions;
+    category: TaskOptions;
+    period: TaskOptions;
+    type: TaskOptions;
+
+
 }
