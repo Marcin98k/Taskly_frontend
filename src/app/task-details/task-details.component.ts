@@ -2,8 +2,14 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Task } from '../model/task';
 import {
-  faSignature, faExclamation, faBullseye, faCalendar, faCalendarCheck,
-  faScroll, faClipboard, faPlus
+  faSignature,
+  faExclamation,
+  faBullseye,
+  faCalendar,
+  faCalendarCheck,
+  faScroll,
+  faClipboard,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { MainTasklyService } from 'src/app/services/main-taskly.service';
 
@@ -13,8 +19,6 @@ import { MainTasklyService } from 'src/app/services/main-taskly.service';
   styleUrls: ['./task-details.component.css']
 })
 export class TaskDetailsComponent {
-
-  
   finTaskModel: Task = new Task();
 
   nameIcon = faSignature;
@@ -30,18 +34,21 @@ export class TaskDetailsComponent {
   task: Task;
   userId: number;
 
-  constructor(private route: ActivatedRoute, private mainTasklyService: MainTasklyService,
-     private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private mainTasklyService: MainTasklyService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
 
     this.task = new Task();
-    this.mainTasklyService.getTaskById(this.id).subscribe(data => {
+    this.mainTasklyService.getTaskById(this.id).subscribe((data) => {
       this.task = data;
       this.task.dateAdded = this.showDateTime(data.dateAdded);
       this.task.taskDate = this.showDateTime(data.taskDate);
-    })
+    });
   }
 
   showDateTime(date: string) {
@@ -53,15 +60,17 @@ export class TaskDetailsComponent {
   }
 
   deleteTask(id: number) {
-    this.mainTasklyService.deleteTask(id).subscribe(data => {
+    this.mainTasklyService.deleteTask(id).subscribe((data) => {
       this.router.navigate(['/tasks']);
     });
   }
 
   finishTask(id: number) {
-    this.finTaskModel.status.name = "FINISHED";
-    this.mainTasklyService.partlyChangeTask(id, this.finTaskModel).subscribe(data => {
-      this.router.navigate(['/tasks']);
-    });
+    this.finTaskModel.status.name = 'FINISHED';
+    this.mainTasklyService
+      .partlyChangeTask(id, this.finTaskModel)
+      .subscribe((data) => {
+        this.router.navigate(['/tasks']);
+      });
   }
 }

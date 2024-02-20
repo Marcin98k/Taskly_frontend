@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { Task } from '../model/task';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
@@ -16,8 +21,6 @@ import { TaskOptions } from '../model/task-options';
   styleUrls: ['./task-create.component.css']
 })
 export class TaskCreateComponent {
-
-
   arrow = faAngleDown;
   defaultTime = '9:30';
 
@@ -49,13 +52,18 @@ export class TaskCreateComponent {
   categoryValues: TaskOptions[] = [];
   typeValues: TaskOptions[] = [];
 
-  constructor(private mainTasklyService: MainTasklyService,
-    private router: Router, private formBuilder: FormBuilder,
-    private tokenService: TokenService) {
-    this.mainTasklyService.decodeToken(this.tokenService.getToken()).subscribe((tokenData: UserProperties) => {
-      this.userProperties = tokenData;
-      this.userId = this.userProperties.id;
-    });
+  constructor(
+    private mainTasklyService: MainTasklyService,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private tokenService: TokenService
+  ) {
+    this.mainTasklyService
+      .decodeToken(this.tokenService.getToken())
+      .subscribe((tokenData: UserProperties) => {
+        this.userProperties = tokenData;
+        this.userId = this.userProperties.id;
+      });
   }
 
   ngOnInit(): void {
@@ -84,52 +92,52 @@ export class TaskCreateComponent {
   }
 
   private getStatus() {
-    this.mainTasklyService.getStatusList().subscribe(data => {
+    this.mainTasklyService.getStatusList().subscribe((data) => {
       console.log(data);
       this.statusValues = data;
     });
   }
 
   private getPriority() {
-    this.mainTasklyService.getPriorityList().subscribe(data => {
+    this.mainTasklyService.getPriorityList().subscribe((data) => {
       this.priorityValues = data;
     });
   }
 
   private getCategory() {
-    this.mainTasklyService.getCategoryList().subscribe(data => {
+    this.mainTasklyService.getCategoryList().subscribe((data) => {
       this.categoryValues = data;
     });
   }
 
   private getType() {
-    this.mainTasklyService.getTypeList().subscribe(data => {
+    this.mainTasklyService.getTypeList().subscribe((data) => {
       this.typeValues = data;
-    })
+    });
   }
 
   private setStatus() {
-    this.statesSelectedValues.valueChanges.subscribe(value => {
+    this.statesSelectedValues.valueChanges.subscribe((value) => {
       this.task.status = value;
     });
   }
 
   private setPriority() {
-    this.prioritiesSelectedValues.valueChanges.subscribe(value => {
+    this.prioritiesSelectedValues.valueChanges.subscribe((value) => {
       this.task.priority = value;
     });
   }
 
   private setCategory() {
-    this.categoriesSelectedValues.valueChanges.subscribe(value => {
+    this.categoriesSelectedValues.valueChanges.subscribe((value) => {
       this.task.category = value;
     });
   }
 
   private setType() {
-    this.typeSelectedValues.valueChanges.subscribe(value => {
+    this.typeSelectedValues.valueChanges.subscribe((value) => {
       this.task.type = value;
-    })
+    });
   }
 
   goToTaskList() {
@@ -144,20 +152,28 @@ export class TaskCreateComponent {
     const taskHour = this.createTask.get('taskTime')?.value;
     const endDate = this.createTask.get('taskEnd')?.value;
 
-    console.log(this.mainTasklyService.formatDate(this.convertDate(startDate, taskHour)));
-    console.log(this.mainTasklyService.formatDate(this.convertDate(endDate, taskHour)));
-    this.task.dateAdded = this.mainTasklyService.formatDate(this.convertDate(startDate, taskHour));
-    this.task.taskDate = this.mainTasklyService.formatDate(this.convertDate(endDate, taskHour));
+    console.log(
+      this.mainTasklyService.formatDate(this.convertDate(startDate, taskHour))
+    );
+    console.log(
+      this.mainTasklyService.formatDate(this.convertDate(endDate, taskHour))
+    );
+    this.task.dateAdded = this.mainTasklyService.formatDate(
+      this.convertDate(startDate, taskHour)
+    );
+    this.task.taskDate = this.mainTasklyService.formatDate(
+      this.convertDate(endDate, taskHour)
+    );
     this.task.remidnerTime = this.createTask.get('taskReminderTime')?.value;
     this.task.userId = this.userId;
 
-    this.mainTasklyService.saveTask(this.task).subscribe(data => {
+    this.mainTasklyService.saveTask(this.task).subscribe((data) => {
       this.goToTaskList();
     });
   }
 
   convertDate(date: moment.Moment, time: string) {
-    let former = date.format('YYYY-MM-DD');
+    const former = date.format('YYYY-MM-DD');
     console.log(former);
     return former + ' ' + time;
   }

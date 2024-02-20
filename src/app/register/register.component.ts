@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../model/user';
 import { TokenService } from 'src/app/services/token.service';
@@ -13,18 +18,20 @@ import { MainTasklyService } from 'src/app/services/main-taskly.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-
-  
   signUp: FormGroup;
   userReg: User = new User();
-  authToken: Object;
+  authToken: object;
 
   usernameControl = new FormControl(null, Validators.required);
   passwordControl = new FormControl(null, Validators.required);
   confirmPasswordControl = new FormControl(null, Validators.required);
 
-  constructor(private router: Router, private formBuilder: FormBuilder,
-    private mainTasklyService: MainTasklyService, private token: TokenService) { }
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private mainTasklyService: MainTasklyService,
+    private token: TokenService
+  ) {}
 
   ngOnInit(): void {
     this.signUp = this.formBuilder.group({
@@ -43,12 +50,14 @@ export class RegisterComponent {
   }
 
   signUpUser() {
-
     if (this.signUp.get('registerPassword')?.value === '') {
       return;
     }
 
-    if (this.signUp.get('registerPassword')?.value === this.signUp.get('registerConfirmPassword')?.value) {
+    if (
+      this.signUp.get('registerPassword')?.value ===
+      this.signUp.get('registerConfirmPassword')?.value
+    ) {
       this.userReg.username = this.signUp.get('registerUsername')?.value;
       this.userReg.password = this.signUp.get('registerPassword')?.value;
       concat(
@@ -61,8 +70,8 @@ export class RegisterComponent {
           }),
           tap((data: string | null) => {
             if (data) {
-              let responseObj = JSON.parse(data);
-              let jwtToken = responseObj.jwt;
+              const responseObj = JSON.parse(data);
+              const jwtToken = responseObj.jwt;
               this.token.setToken(jwtToken);
               this.goToMainPage();
             }

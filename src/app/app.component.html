@@ -8,13 +8,13 @@
         close
       </mat-icon>
     </button>
-    <h4><img atl="logo" src="assets/images/taskly_logo.svg"> Taskly</h4>
+    <h4><img alt="logo" src="assets/images/taskly_logo.svg"> Taskly</h4>
   </div>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav">
     <div class="user-info" *ngIf="userProperties">
-      <img class="avatar mat-elevation-z8" src="../assets/images/user.png">
+      <img alt="avatar" class="avatar mat-elevation-z8" src="../assets/images/user.png">
       <h4>{{ userProperties.username }}</h4>
       <p>{{ userProperties.role }}</p>
       <!-- <p>ACCOUNT-TYPE</p> -->

@@ -11,19 +11,47 @@ import { RouteAuthorizationGuard } from './guard/route-authorization.guard';
 import { TaskListComponent } from './task-list/task-list.component';
 
 const routes: Routes = [
-{ path : 'tasks', component: TaskListComponent, canActivate: [RouteAuthorizationGuard]},
-{ path: 'create-task', component: TaskCreateComponent , canActivate: [RouteAuthorizationGuard] },
-{ path: 'update-task/:id', component: TaskUpdateComponent , canActivate: [RouteAuthorizationGuard] },
-{ path: 'task-details/:id', component: TaskDetailsComponent , canActivate: [RouteAuthorizationGuard] },
-{ path: 'login', component: LoginComponent},
-{ path: 'register', component: RegisterComponent, canActivate: [RouteAuthorizationGuard] },
-{ path: 'user', component: UserComponent, canActivate: [RouteAuthorizationGuard] },
-{ path: 'settings', component: SettingsComponent, canActivate: [RouteAuthorizationGuard] },
-{ path: '', redirectTo: 'user', pathMatch: 'full' }
+  {
+    path: 'tasks',
+    component: TaskListComponent,
+    canActivate: [RouteAuthorizationGuard]
+  },
+  {
+    path: 'create-task',
+    component: TaskCreateComponent,
+    canActivate: [RouteAuthorizationGuard]
+  },
+  {
+    path: 'update-task/:id',
+    component: TaskUpdateComponent,
+    canActivate: [RouteAuthorizationGuard]
+  },
+  {
+    path: 'task-details/:id',
+    component: TaskDetailsComponent,
+    canActivate: [RouteAuthorizationGuard]
+  },
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [RouteAuthorizationGuard]
+  },
+  {
+    path: 'user',
+    component: UserComponent,
+    canActivate: [RouteAuthorizationGuard]
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    canActivate: [RouteAuthorizationGuard]
+  },
+  { path: '', redirectTo: 'user', pathMatch: 'full' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

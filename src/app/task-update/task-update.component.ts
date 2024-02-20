@@ -11,10 +11,18 @@ import { TaskOptions } from '../model/task-options';
   styleUrls: ['./task-update.component.css']
 })
 export class TaskUpdateComponent {
-
   id: number;
-  userId: number;
-  
+  // userId: number;
+
+  name = 'Name:';
+  userId = 'User id:';
+  startDate = 'Start date:';
+  endDate = 'End date:';
+  state = 'State:';
+  priority = 'Priority:';
+  category = 'Category:';
+  note = 'Note:';
+
   statusValues: TaskOptions[] = [];
   prioritiesValues: TaskOptions[] = [];
   categoriesValues: TaskOptions[] = [];
@@ -22,16 +30,19 @@ export class TaskUpdateComponent {
   statusSelectedValues = new FormControl();
   prioritiesSelectedValues = new FormControl();
   categoriesSelectedValues = new FormControl();
-  
+
   task: Task = new Task();
 
-  constructor (private mainTasklyService: MainTasklyService,
-    private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private mainTasklyService: MainTasklyService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
 
-    this.mainTasklyService.getTaskById(this.id).subscribe(data => {
+    this.mainTasklyService.getTaskById(this.id).subscribe((data) => {
       this.task = data;
       this.statusSelectedValues.setValue(this.task.status);
       this.prioritiesSelectedValues.setValue(this.task.priority);
@@ -47,9 +58,11 @@ export class TaskUpdateComponent {
   }
 
   ngSubmit() {
-    this.task.dateAdded = this.mainTasklyService.formatDate(this.task.dateAdded);
+    this.task.dateAdded = this.mainTasklyService.formatDate(
+      this.task.dateAdded
+    );
     this.task.taskDate = this.mainTasklyService.formatDate(this.task.taskDate);
-    this.mainTasklyService.updateTask(this.id, this.task).subscribe(data => {
+    this.mainTasklyService.updateTask(this.id, this.task).subscribe((data) => {
       this.gotToTaskList();
     });
   }
@@ -59,37 +72,37 @@ export class TaskUpdateComponent {
   }
 
   private getStatus() {
-    this.mainTasklyService.getStatusList().subscribe(data => {
+    this.mainTasklyService.getStatusList().subscribe((data) => {
       this.statusValues = data;
     });
   }
 
   private getPriorities() {
-    this.mainTasklyService.getPriorityList().subscribe(data => {
+    this.mainTasklyService.getPriorityList().subscribe((data) => {
       this.prioritiesValues = data;
     });
   }
 
   private getCategories() {
-    this.mainTasklyService.getCategoryList().subscribe(data => {
+    this.mainTasklyService.getCategoryList().subscribe((data) => {
       this.categoriesValues = data;
     });
   }
 
   private setValueStatus() {
-    this.statusSelectedValues.valueChanges.subscribe(value => {
+    this.statusSelectedValues.valueChanges.subscribe((value) => {
       this.task.status = value;
     });
   }
 
   private setValuePriority() {
-    this.prioritiesSelectedValues.valueChanges.subscribe(value => {
+    this.prioritiesSelectedValues.valueChanges.subscribe((value) => {
       this.task.priority = value;
     });
   }
 
   private setValueCategory() {
-    this.categoriesSelectedValues.valueChanges.subscribe(value => {
+    this.categoriesSelectedValues.valueChanges.subscribe((value) => {
       this.task.category = value;
     });
   }

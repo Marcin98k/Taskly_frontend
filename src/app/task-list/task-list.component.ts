@@ -1,11 +1,22 @@
-import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  SimpleChanges
+} from '@angular/core';
 import { Task } from '../model/task';
 import { Router } from '@angular/router';
 import {
-  faSignature, faExclamation, faBullseye, faCalendar, faCalendarCheck,
-  faScroll, faClipboard, faPlus
+  faSignature,
+  faExclamation,
+  faBullseye,
+  faCalendar,
+  faCalendarCheck,
+  faScroll,
+  faClipboard,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons';
-import { MatTableDataSource } from '@angular/material/table'
+import { MatTableDataSource } from '@angular/material/table';
 import { MainTasklyService } from 'src/app/services/main-taskly.service';
 
 @Component({
@@ -14,8 +25,6 @@ import { MainTasklyService } from 'src/app/services/main-taskly.service';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent {
-
-
   displayedColumns: string[] = ['name', 'category', 'priority', 'status'];
   @Input() tasks: Task[];
   finTaskModel: Task = new Task();
@@ -30,9 +39,11 @@ export class TaskListComponent {
   noteIcon = faClipboard;
   plusIcon = faPlus;
 
-  constructor(private mainTasklyService: MainTasklyService,
-    private router: Router, private ctf: ChangeDetectorRef) {
-  }
+  constructor(
+    private mainTasklyService: MainTasklyService,
+    private router: Router,
+    private ctf: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit(): void {
     this.dataSource = new MatTableDataSource(this.tasks);
@@ -73,7 +84,9 @@ export class TaskListComponent {
   }
 
   deleteTask(id: number) {
-    this.mainTasklyService.deleteTask(id).subscribe(data => {});
+    this.mainTasklyService.deleteTask(id).subscribe((data) => {
+      console.log(data);
+    });
   }
 
   taskDetails(id: number) {
@@ -81,9 +94,11 @@ export class TaskListComponent {
   }
 
   finishTask(id: number) {
-    this.finTaskModel.status.name = "Finished";
-    this.mainTasklyService.partlyChangeTask(id, this.finTaskModel).subscribe(data => {
-      this.router.navigate(['/tasks']);
-    });
+    this.finTaskModel.status.name = 'Finished';
+    this.mainTasklyService
+      .partlyChangeTask(id, this.finTaskModel)
+      .subscribe((data) => {
+        this.router.navigate(['/tasks']);
+      });
   }
 }

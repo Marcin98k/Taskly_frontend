@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class TokenService {
-
   private token: string | null;
 
   constructor() {
@@ -16,7 +15,7 @@ export class TokenService {
     this.saveTokenToLocal(token);
   }
 
-  getToken(): string | null{
+  getToken(): string | null {
     return this.token;
   }
 

@@ -1,5 +1,4 @@
 export class TaskOptions {
-
-    name: string;
-    value: string;
+  name: string;
+  value: string;
 }
