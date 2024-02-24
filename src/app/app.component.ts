@@ -7,9 +7,9 @@ import {
 } from '@angular/material/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { UserProperties } from './model/user-properties';
-import { MainTasklyService } from './services/main-taskly.service';
-import { TokenService } from './services/token.service';
+import { UserProperties } from './main/model/user-properties';
+import { MainTasklyService } from './core/services/main-taskly.service';
+import { TokenService } from './core/services/token.service';
 import {
   faBriefcase,
   faChevronDown,
@@ -81,18 +81,18 @@ export class AppComponent {
     }
   }
 
-  ngAfterViewInit() {
-    this.observer.observe('(max-width: 800px)').subscribe((res) => {
-      if (res.matches) {
-        this.sidenav.mode = 'over';
-        this.sidenav.close();
-      } else {
-        this.sidenav.mode = 'side';
-        this.sidenav.open();
-      }
-      this.cd.detectChanges();
-    });
-  }
+  // ngAfterViewInit() {
+  //   this.observer.observe('(max-width: 800px)').subscribe((res) => {
+  //     if (res.matches) {
+  //       this.sidenav.mode = 'over';
+  //       this.sidenav.close();
+  //     } else {
+  //       this.sidenav.mode = 'side';
+  //       this.sidenav.open();
+  //     }
+  //     this.cd.detectChanges();
+  //   });
+  // }
 
   isLoggedIn() {
     this.sidenav.mode = 'over';

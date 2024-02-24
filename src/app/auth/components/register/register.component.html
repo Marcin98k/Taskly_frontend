@@ -1,0 +1,40 @@
+<div class="register-wrapper mt-3">
+    <h2>Sign up</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <div>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput minlength="4" maxlength="64" required formControlName="email">
+                <mat-error *ngIf="controls.email.invalid">{{ getErrorMessage() }}</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Username</mat-label>
+                <input matInput minlength="4" maxlength="128" appFirstLetter required formControlName="username">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Enter your password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" required formControlName="password">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Confirm your password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" required formControlName="confirmPassword">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+         <mat-checkbox formControlName="terms" required>Terms(required)</mat-checkbox>
+        <div class="d-flex justify-content-end">
+            <button mat-raised-button color="primary" type="submit">Sign in</button>
+        </div>
+    </form>
+</div>

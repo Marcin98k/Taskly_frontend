@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TaskCreateComponent } from './task-create/task-create.component';
-import { TaskUpdateComponent } from './task-update/task-update.component';
-import { TaskDetailsComponent } from './task-details/task-details.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { UserComponent } from './user/user.component';
-import { SettingsComponent } from './settings/settings/settings.component';
-import { RouteAuthorizationGuard } from './guard/route-authorization.guard';
-import { TaskListComponent } from './task-list/task-list.component';
+import { TaskCreateComponent } from './main/components/task-create/task-create.component';
+import { TaskUpdateComponent } from './main/components/task-update/task-update.component';
+import { TaskDetailsComponent } from './main/components/task-details/task-details.component';
+import { UserComponent } from './main/user/user.component';
+import { SettingsComponent } from './main/settings/settings.component';
+import { RouteAuthorizationGuard } from './core/guard/route-authorization.guard';
+import { TaskListComponent } from './main/components/task-list/task-list.component';
 
 const routes: Routes = [
   {
@@ -29,12 +27,6 @@ const routes: Routes = [
   {
     path: 'task-details/:id',
     component: TaskDetailsComponent,
-    canActivate: [RouteAuthorizationGuard]
-  },
-  { path: 'login', component: LoginComponent },
-  {
-    path: 'register',
-    component: RegisterComponent,
     canActivate: [RouteAuthorizationGuard]
   },
   {

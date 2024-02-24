@@ -1,4 +1,4 @@
-<mat-toolbar>
+<!-- <mat-toolbar>
   <div class="logo">
     <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
       <mat-icon *ngIf="!sidenav.opened">
@@ -10,14 +10,14 @@
     </button>
     <h4><img alt="logo" src="assets/images/taskly_logo.svg"> Taskly</h4>
   </div>
-</mat-toolbar>
-<mat-sidenav-container>
+</mat-toolbar> -->
+<!-- <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav">
     <div class="user-info" *ngIf="userProperties">
       <img alt="avatar" class="avatar mat-elevation-z8" src="../assets/images/user.png">
       <h4>{{ userProperties.username }}</h4>
       <p>{{ userProperties.role }}</p>
-      <!-- <p>ACCOUNT-TYPE</p> -->
+    
     </div>
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -71,4 +71,5 @@
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->
+<router-outlet></router-outlet>
