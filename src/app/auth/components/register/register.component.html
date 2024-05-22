@@ -1,40 +1,124 @@
 <div class="register-wrapper mt-3">
-    <h2>Sign up</h2>
-    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-        <div>
-            <mat-form-field>
-                <mat-label>Email</mat-label>
-                <input matInput minlength="4" maxlength="64" required formControlName="email">
-                <mat-error *ngIf="controls.email.invalid">{{ getErrorMessage() }}</mat-error>
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Username</mat-label>
-                <input matInput minlength="4" maxlength="128" appFirstLetter required formControlName="username">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Enter your password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" required formControlName="password">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Confirm your password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" required formControlName="confirmPassword">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
-        </div>
-         <mat-checkbox formControlName="terms" required>Terms(required)</mat-checkbox>
-        <div class="d-flex justify-content-end">
-            <button mat-raised-button color="primary" type="submit">Sign in</button>
-        </div>
-    </form>
+  <h2>Sign up</h2>
+
+  <form #f="ngForm" (ngSubmit)="onRegister()">
+    <div>
+      <mat-form-field>
+        <mat-label>Enter your email</mat-label>
+        <input matInput required name="email" [(ngModel)]="userData.email" />
+      </mat-form-field>
+    </div>
+    <ng-container
+      *ngIf="
+        (f.controls?.['email']?.invalid && f.controls?.['email']?.touched) ||
+        f.controls?.['email']?.dirty
+      "
+    >
+      <app-alert
+        *ngIf="f.controls?.['email']?.errors"
+        [text]="getErrorMessage(f.controls['email'])"
+      ></app-alert>
+    </ng-container>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Enter your username</mat-label>
+        <input
+          matInput
+          appFirstLetter
+          minlength="3"
+          maxlength="128"
+          required
+          name="username"
+          [(ngModel)]="userData.username"
+        />
+      </mat-form-field>
+    </div>
+    <ng-container
+      *ngIf="
+        (f.controls?.['username']?.invalid &&
+          f.controls?.['username']?.touched) ||
+        f.controls?.['username']?.dirty
+      "
+    >
+      <app-alert
+        *ngIf="f.controls?.['username']?.errors"
+        [text]="getErrorMessage(f.controls['username'])"
+      ></app-alert>
+    </ng-container>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          required
+          minlength="8"
+          name="password"
+          [(ngModel)]="userData.password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <ng-container
+      *ngIf="
+        f.controls?.['password']?.invalid &&
+        f.controls?.['password']?.touched &&
+        f.controls?.['password']?.dirty
+      "
+    >
+      <app-alert
+        *ngIf="f.controls?.['password']?.errors"
+        [text]="getErrorMessage(f.controls['password'])"
+      ></app-alert>
+    </ng-container>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Confirm your password</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          minlength="8"
+          required
+          name="confirmPassword"
+          [(ngModel)]="userData.confirmPassword"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <ng-container
+      *ngIf="
+        f.controls?.['confirmPassword']?.invalid &&
+        f.controls?.['confirmPassword']?.touched &&
+        f.controls?.['confirmPassword']?.dirty
+      "
+    >
+      <app-alert
+        *ngIf="f.controls?.['confirmPassword']?.errors"
+        [text]="getErrorMessage(f.controls['confirmPassword'])"
+      ></app-alert>
+    </ng-container>
+
+    <div class="d-flex justify-content-end">
+      <button mat-raised-button color="primary" type="submit">Sign up</button>
+    </div>
+  </form>
 </div>

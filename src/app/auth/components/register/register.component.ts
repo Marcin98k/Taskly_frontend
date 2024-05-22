@@ -1,97 +1,68 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { TokenService } from 'src/app/core/services/token.service';
-import { MainTasklyService } from 'src/app/core/services/main-taskly.service';
-import { UserLoginData } from 'src/app/main/model/user';
+import { Component, ViewChild } from '@angular/core';
+import { AbstractControl, NgForm } from '@angular/forms';
+import { UserRegisterData } from 'src/app/main/model/user';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
+  @ViewChild('f') form!: NgForm;
+
   hide = true;
 
-  registerForm = new FormGroup({
-    email: new FormControl('', [Validators.email, Validators.required]),
-    username: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(128)
-    ]),
-    password: new FormControl('', [Validators.required]),
-    confirmPassword: new FormControl('', [Validators.required]),
-    terms: new FormControl('', [Validators.required])
-  });
+  userData: UserRegisterData = {
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    whenJoin: new Date(),
+    isActive: false,
+    lastVisit: new Date()
+  };
 
-  get controls() {
-    return this.registerForm.controls;
-  }
-
-  signUp: FormGroup;
-  userReg: UserLoginData;
-  authToken: object;
-
-  constructor(
-    private router: Router,
-    private mainTasklyService: MainTasklyService,
-    private token: TokenService
-  ) {}
-
-  ngOnInit(): void {
-    console.log('');
-  }
-
-  getErrorMessage() {
-    if (
-      this.controls.email.hasError('required') ||
-      this.controls.username.hasError('required') ||
-      this.controls.password.hasError('required') ||
-      this.controls.confirmPassword.hasError('required')
-    ) {
-      return 'You must enter a value';
-    }
-
-    return this.controls.email.hasError('email') ? 'Not a valid email' : '';
-  }
+  constructor(private authService: AuthService) {}
 
   onRegister() {
-    console.log(this.registerForm.value);
+    const password = this.userData.password;
+    const confirmPassword = this.userData.confirmPassword;
+
+    if (!password || password !== confirmPassword) {
+      this.form.controls['confirmPassword'].setErrors({ mustMatch: true });
+      console.log('RegisterError');
+    } else {
+      this.userData.whenJoin = new Date();
+      this.userData.lastVisit = new Date();
+
+      this.authService.signUp(this.userData).subscribe({
+        next(value) {
+          console.log(value);
+        },
+        error: (err) => {
+          this.showError(err);
+        }
+      });
+    }
   }
 
-  goToMainPage() {
-    this.router.navigate(['/tasks']);
+  showError(error: unknown) {
+    console.log('Registration error: ', error);
   }
 
-  signUpUser() {
-    // if (this.signUp.get('registerPassword')?.value === '') {
-    //   return;
-    // }
-    // if (
-    //   this.signUp.get('registerPassword')?.value ===
-    //   this.signUp.get('registerConfirmPassword')?.value
-    // ) {
-    //   this.userReg.username = this.signUp.get('registerUsername')?.value;
-    //   this.userReg.password = this.signUp.get('registerPassword')?.value;
-    //   concat(
-    //     this.mainTasklyService.signUpUser(this.userReg),
-    //     this.mainTasklyService.signInUser(this.userReg).pipe(
-    //       first(),
-    //       catchError((error: any) => {
-    //         console.log(error);
-    //         return of(null);
-    //       }),
-    //       tap((data: string | null) => {
-    //         if (data) {
-    //           const responseObj = JSON.parse(data);
-    //           const jwtToken = responseObj.jwt;
-    //           this.token.setToken(jwtToken);
-    //           this.goToMainPage();
-    //         }
-    //       })
-    //     )
-    //   ).subscribe();
-    // }
+  getErrorMessage(control: AbstractControl): string {
+    if (control.errors?.['required']) {
+      return 'To pole jest wymagane';
+    } else if (control.errors?.['appfirstletter']) {
+      return 'Pierwszy znak musi być literą';
+    } else if (control.errors?.['minlength']) {
+      return `Minimalna liczba znaków to ${control.errors['minlength'].requiredLength}`;
+    } else if (control.errors?.['maxlength']) {
+      return `Maksymalna liczba znaków to ${control.errors['maxlength'].requiredLength}`;
+    } else if (control.errors?.['mustMatch']) {
+      return 'Hasła się nie zgadzają';
+    }
+    return '';
   }
 }

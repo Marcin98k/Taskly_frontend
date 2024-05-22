@@ -16,13 +16,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PasswordMatchDirective } from './password-match.directive';
-import { FirstLetterDirective } from './first-letter.directive';
+import { FirstLetterDirective } from './validators/first-letter.directive';
 import { MatCardModule } from '@angular/material/card';
 import { AlertComponent } from './components/alert/alert.component';
+import { MustMatchDirective } from './validators/must-match.directive';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
-  declarations: [PasswordMatchDirective, FirstLetterDirective, AlertComponent],
+  declarations: [FirstLetterDirective, MustMatchDirective, AlertComponent],
   exports: [
     MatCardModule,
     MatButtonModule,
@@ -44,8 +45,10 @@ import { AlertComponent } from './components/alert/alert.component';
     ReactiveFormsModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
-    PasswordMatchDirective,
-    AlertComponent
+    AlertComponent,
+    FirstLetterDirective,
+    MustMatchDirective,
+    MatMenuModule
   ]
 })
 export class SharedModule {}

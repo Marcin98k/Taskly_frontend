@@ -1,34 +1,82 @@
 <div class="login-wrapper mt-3">
-    <h2>Sign in</h2>
-    <form #f ='ngForm' (ngSubmit)="onLogin()">
-        <div>
-            <mat-form-field>
-                <mat-label>Enter your email</mat-label>
-                <input matInput minlength="4" maxlength="128" required name="username" [(ngModel)]="userData.username">
-            </mat-form-field>
-        </div>
-        <ng-container *ngIf="f.controls?.['username']?.invalid && f.controls?.['username']?.touched &&
-        f.controls?.['username']?.dirty">
-            <app-alert *ngIf="f.controls?.['username']?.errors" [text]="'Pusta kontrolka'"></app-alert>
-        </ng-container>
-        <div>
-            <mat-form-field>
-                <mat-label>Enter your password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" required name="password" [(ngModel)]="userData.password">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
-        </div>
-        <ng-container *ngIf="f.controls?.['password']?.invalid && (f.controls?.['password']?.touched ||
-        f.controls?.['password']?.dirty)">
-            <app-alert *ngIf="f.controls?.['password']?.errors" [text]="'Pusta kontrolka'"></app-alert>
-        </ng-container>
-        <div class="d-flex justify-content-end">
-            <button mat-raised-button color="primary" type="submit" [disabled]="!f.valid">Sign in</button>
-        </div>
-    </form>
-    <div class="login-nav mt-3 text-center">
-        <p>You do not have an account?<a routerLink="/sign-up" routerLinkActive="active">Sign up</a></p>
+  <h2>Sign in</h2>
+  <form #f="ngForm" (ngSubmit)="onLogin()">
+    <div>
+      <mat-form-field>
+        <mat-label>Enter your email</mat-label>
+        <input
+          matInput
+          maxlength="128"
+          required
+          name="email"
+          [(ngModel)]="userData.email"
+        />
+      </mat-form-field>
     </div>
+    <ng-container
+      *ngIf="
+        (f.controls?.['email']?.invalid && f.controls?.['email']?.touched) ||
+        f.controls?.['email']?.dirty
+      "
+    >
+      <app-alert
+        *ngIf="f.controls?.['email']?.errors"
+        [text]="getErrorMessage(f.controls['email'])"
+      ></app-alert>
+    </ng-container>
+    <div>
+      <mat-form-field>
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          required
+          minlength="8"
+          name="password"
+          [(ngModel)]="userData.password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <ng-container
+      *ngIf="
+        (f.controls?.['password']?.invalid &&
+          f.controls?.['password']?.touched) ||
+        f.controls?.['password']?.dirty
+      "
+    >
+      <app-alert
+        *ngIf="f.controls?.['password']?.errors"
+        [text]="getErrorMessage(f.controls['password'])"
+      ></app-alert>
+    </ng-container>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <div class="d-flex justify-content-end">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!f.valid"
+      >
+        Sign in
+      </button>
+    </div>
+  </form>
+  <div class="login-nav mt-3 text-center">
+    <p>
+      You do not have an account?<a
+        routerLink="/sign-up"
+        routerLinkActive="active"
+        >Sign up</a
+      >
+    </p>
+  </div>
 </div>

@@ -2,27 +2,31 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminComponent } from './admin/admin.component';
-import { TaskCreateComponent } from './components/task-create/task-create.component';
-import { TaskDetailsComponent } from './components/task-details/task-details.component';
-import { TaskListComponent } from './components/task-list/task-list.component';
-import { TaskUpdateComponent } from './components/task-update/task-update.component';
-import { SettingsComponent } from './settings/settings.component';
-import { UserComponent } from './user/user.component';
-import { HomeComponent } from './home/home.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { UserComponent } from './components/user/user.component';
+import { HomeComponent } from './components/home/home.component';
 import { SharedModule } from '../shared/shared.module';
+import { AuthRoutingModule } from '../auth/auth-routing.module';
+import { CoreModule } from '../core/core.module';
+import { CreateTaskComponent } from './components/task/create-task/create-task.component';
+import { ShowTaskComponent } from './components/task/show-task/show-task.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
-    TaskCreateComponent,
-    TaskUpdateComponent,
-    TaskDetailsComponent,
-    TaskListComponent,
     UserComponent,
     SettingsComponent,
-    HomeComponent
+    HomeComponent,
+    CreateTaskComponent,
+    ShowTaskComponent
   ],
-  imports: [CommonModule, SharedModule],
-  exports: [HomeComponent]
+  imports: [
+    CommonModule,
+    SharedModule,
+    AuthRoutingModule,
+    CoreModule,
+    SharedModule
+  ],
+  exports: [AdminComponent, UserComponent, SettingsComponent, HomeComponent]
 })
 export class MainModule {}

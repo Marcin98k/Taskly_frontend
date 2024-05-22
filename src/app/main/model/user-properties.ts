@@ -1,7 +1,7 @@
 export class UserProperties {
-  id: number;
-  username: string;
-  role: string;
+  id!: number;
+  username!: string;
+  role!: string;
 
   public getId(): number {
     return this.id;

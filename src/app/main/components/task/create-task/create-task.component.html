@@ -1,0 +1,122 @@
+<div class="task-form-wrapper mt-3">
+  <h2 *ngIf="editMode">Add a new task:</h2>
+  <form (ngSubmit)="onAddTask()" [formGroup]="taskForm">
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" appFirstLetter matInput />
+        <mat-error *ngIf="controls.name.invalid && controls.name.dirty">{{
+          getErrorMessage(controls.name)
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field color="accent">
+        <mat-label>Task date</mat-label>
+        <input formControlName="taskDate" matInput [matDatepicker]="picker1" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <mat-error *ngIf="controls.taskDate.invalid">{{
+          getErrorMessage(controls.taskDate)
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Select status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let value of statusValues" [value]="value.name">{{
+            value.value
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="controls.status.invalid">{{
+          getErrorMessage(controls.status)
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Select priority</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option
+            *ngFor="let value of priorityValues"
+            [value]="value.name"
+            >{{ value.value }}</mat-option
+          >
+        </mat-select>
+        <mat-error *ngIf="controls.priority.invalid">{{
+          getErrorMessage(controls.priority)
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Select category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option
+            *ngFor="let value of categoryValues"
+            [value]="value.name"
+            >{{ value.value }}</mat-option
+          >
+        </mat-select>
+        <mat-error *ngIf="controls.category.invalid">{{
+          getErrorMessage(controls.category)
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Select type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let value of typeValues" [value]="value.name">{{
+            value.value
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="controls.type.invalid">{{
+          getErrorMessage(controls.type)
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Leave a note</mat-label>
+        <textarea
+          formControlName="note"
+          matInput
+          placeholder="Ex. It makes me feel..."
+        ></textarea>
+        <mat-error *ngIf="controls.note.invalid">{{
+          getErrorMessage(controls.note)
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button
+        (click)="emitCloseDialog()"
+        *ngIf="editMode"
+        color="warn"
+        mat-raised-button
+        type="button"
+      >
+        Anuluj
+      </button>
+      <button
+        [disabled]="taskForm.invalid"
+        class="mx-1"
+        color="primary"
+        mat-raised-button
+        type="submit"
+      >
+        {{ editMode ? "Edit task" : "Add a new task" }}
+      </button>
+    </div>
+    <app-alert *ngIf="errorMessage" [text]="errorMessage"></app-alert>
+  </form>
+</div>

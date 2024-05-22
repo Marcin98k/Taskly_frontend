@@ -49,7 +49,7 @@ export const MY_DATE_FORMAT = {
 })
 export class AppComponent {
   @ViewChild(MatSidenav)
-  sidenav: MatSidenav;
+  sidenav!: MatSidenav;
 
   // Icons
   plusIcon = faPlus;
@@ -62,9 +62,7 @@ export class AppComponent {
   elseIcon = faPaperPlane;
   arrowDownIcon = faChevronDown;
 
-  token: string | null;
-
-  userProperties: UserProperties;
+  userProperties!: UserProperties;
 
   constructor(
     private observer: BreakpointObserver,
@@ -72,14 +70,7 @@ export class AppComponent {
     private tokenService: TokenService,
     private router: Router,
     private cd: ChangeDetectorRef
-  ) {
-    this.token = tokenService.getToken();
-    if (this.token !== null) {
-      this.mainTasklyService.decodeToken(this.token).subscribe((data) => {
-        this.userProperties = data;
-      });
-    }
-  }
+  ) {}
 
   // ngAfterViewInit() {
   //   this.observer.observe('(max-width: 800px)').subscribe((res) => {

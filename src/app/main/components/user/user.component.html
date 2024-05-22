@@ -1,0 +1,94 @@
+<div class="container">
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-12 col-md-12 col-lg-6 col-xl-5">
+          <h1>Taskly</h1>
+          <p class="lead mb-3">- your personal task manager.</p>
+          <p class="lead mb-5">Plan your future.</p>
+          <p><strong>Works in every browser:</strong></p>
+          <p class="h1 text-muted">
+            <i class="fab fa-chrome mr-3"></i>
+            <i class="fab fa-safari mr-3"></i>
+            <i class="fab fa-firefox mr-3"></i>
+            <i class="fab fa-edge"></i>
+          </p>
+        </div>
+        <div
+          class="col-12 col-md-8 m-auto ml-lg-auto mr-lg-0 col-lg-6 pt-5 pt-lg-0"
+        >
+          <img
+            alt="image"
+            class="img-fluid"
+            src="assets/images/dashboard.svg"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fdb-block heard-section">
+    <div class="container">
+      <div class="row text-left">
+        <div
+          class="col-12 col-md-5 pt-5 pt-md-0 mx-auto text-center small-block"
+        >
+          <h5>
+            <fa-icon [icon]="icInProgress"></fa-icon>
+            Number of current tasks:
+          </h5>
+          <p class="lead">{{ activeTask }}</p>
+          <p class="lead">
+            <a routerLink="#" routerLinkActive="active" class="lead"
+              >See more</a
+            >
+          </p>
+        </div>
+        <div
+          class="col-12 col-md-5 pt-5 pt-md-0 mx-auto text-center small-block"
+        >
+          <h5>
+            <fa-icon [icon]="icCompleted"></fa-icon>
+            Number of completed tasks:
+          </h5>
+          <p class="lead">{{ completedTask }}</p>
+          <p class="lead">
+            <a routerLink="#" routerLinkActive="active" class="lead"
+              >See more</a
+            >
+          </p>
+        </div>
+        <div
+          class="col-12 col-md-5 pt-5 pt-md-0 mx-auto text-center small-block"
+        >
+          <h5>
+            <fa-icon [icon]="icTaskList"></fa-icon>
+            Number of all tasks:
+          </h5>
+          <p class="lead">{{ allTask }}</p>
+          <p class="lead">
+            <a routerLink="#" routerLinkActive="active">See more</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="large-part">
+    <button (click)="showCurrentTasks()" type="checkbox">
+      <p style="float: left">Current tasks</p>
+      <fa-icon [icon]="currentTasksVisible ? icArrowUp : icArrowDown"></fa-icon>
+    </button>
+    <div class="large-block" *ngIf="currentTasksVisible">
+      <!-- <app-task-list [tasks]="currentTasks"></app-task-list> -->
+    </div>
+  </div>
+
+  <div class="large-part">
+    <button (click)="showFinishedTasks()" type="checkbox">
+      <p style="float: left">Finished tasks</p>
+      <fa-icon [icon]="finishedTaskVisible ? icArrowUp : icArrowDown"></fa-icon>
+    </button>
+    <div class="large-block" *ngIf="finishedTaskVisible">
+      <!-- <app-task-list [tasks]="finishedTasks"></app-task-list> -->
+    </div>
+  </div>
+</div>

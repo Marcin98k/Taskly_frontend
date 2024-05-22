@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { JwtPayload, jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,25 @@ export class TokenService {
     return localStorage.getItem('tokenJWT');
   }
 
+  getUserId(): number {
+    if (this.token && this.token !== '') {
+      try {
+        const temp = jwtDecode<MyTokenPayload>(this.token);
+
+        return temp.id;
+      } catch (error) {
+        throw new Error('Error decoding token');
+      }
+    } else {
+      throw new Error('Token is not provided');
+    }
+  }
+
   removeTokenFromLocal() {
     return localStorage.removeItem('tokenJWT');
   }
+}
+
+interface MyTokenPayload extends JwtPayload {
+  id: number;
 }

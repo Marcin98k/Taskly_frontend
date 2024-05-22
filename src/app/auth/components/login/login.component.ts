@@ -1,84 +1,49 @@
-import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
 import { UserLoginData } from 'src/app/main/model/user';
-import { TokenService } from 'src/app/core/services/token.service';
-import { catchError, first } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { MainTasklyService } from 'src/app/core/services/main-taskly.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { AbstractControl, NgForm } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  @ViewChild('f') loginForm!: NgForm;
+
   hide = true;
-  signIn: FormGroup;
-
-  userLog: UserLoginData;
-  authToken: unknown;
-
-  usernameControl = new FormControl(null, Validators.required);
-  passwordControl = new FormControl(null, Validators.required);
+  errorMessage!: string;
 
   userData: UserLoginData = {
-    username: '',
+    email: '',
     password: ''
   };
 
-  constructor(
-    private mainTasklyService: MainTasklyService,
-    private router: Router,
-    private formBuilder: FormBuilder,
-    private token: TokenService
-  ) {}
-
-  // ngOnInit(): void {
-  //   this.signIn = this.formBuilder.group({
-  //     loginUsername: [''],
-  //     loginPassword: ['']
-  //   });
-  // }
-
-  // ngSubmit() {
-  //   this.signInUser();
-  // }
+  constructor(private authService: AuthService) {}
 
   onLogin() {
-    console.log(this.userData);
+    this.authService.signIn(this.userData).subscribe({
+      next: (value) => {
+        this.errorMessage = value;
+        this.loginForm.controls['password'].reset();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 
-  goToMainPage() {
-    this.router.navigate(['/user']);
+  showError(error: unknown) {
+    console.log('Login error: ', error);
   }
 
-  signInUser() {
-    this.userLog.username = this.signIn.get('loginUsername')?.value;
-    this.userLog.password = this.signIn.get('loginPassword')?.value;
-    this.mainTasklyService
-      .signInUser(this.userLog)
-      .pipe(
-        first(),
-        catchError((error: unknown) => {
-          console.log(error);
-          return of(null);
-        })
-      )
-      .subscribe((data: string | null) => {
-        if (data) {
-          const responseObj = JSON.parse(data);
-          const jwtToken = responseObj.jwt;
-          this.token.saveTokenToLocal(jwtToken);
-          this.token.setToken(jwtToken);
-          this.goToMainPage();
-        } else {
-          console.log('NULL Login - > data');
-        }
-      });
+  getErrorMessage(control: AbstractControl): string {
+    if (control.errors?.['required']) {
+      return 'To pole jest wymagane';
+    } else if (control.errors?.['maxlength']) {
+      return `Maksymalna liczba znaków to ${control.errors['maxlength'].requiredLength}`;
+    } else if (control.errors?.['minlength']) {
+      return `Minimalna liczba znaków to ${control.errors['minlength'].requiredLength}`;
+    }
+    return '';
   }
 }
