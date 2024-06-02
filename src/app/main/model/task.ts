@@ -4,10 +4,10 @@ import { TaskOptions } from './task-options';
 export interface BaseTask {
   name: string;
   taskDate: string;
-  status: TaskOptions;
-  priority: TaskOptions;
-  category: TaskOptions;
-  type: TaskOptions;
+  status: TaskOptions | string;
+  priority: TaskOptions | string;
+  category: TaskOptions | string;
+  type: TaskOptions | string;
   note: string;
 }
 export interface TaskResponse extends BaseTask {
@@ -22,11 +22,12 @@ export type PostTask = Omit<TaskResponse, 'id'>;
 
 export interface PostTaskForm {
   name: FormControl<string>;
-  taskDate: FormControl<string>;
-  status: FormControl<string | TaskOptions>;
-  priority: FormControl<string | TaskOptions>;
-  category: FormControl<string | TaskOptions>;
-  type: FormControl<string | TaskOptions>;
+  taskDate: FormControl<Date | string>;
+  taskTime: FormControl<string>;
+  status: FormControl<string>;
+  priority: FormControl<string>;
+  category: FormControl<string>;
+  type: FormControl<string>;
   note: FormControl<string>;
 }
 

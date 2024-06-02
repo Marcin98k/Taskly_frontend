@@ -8,8 +8,11 @@ import { HomeComponent } from './components/home/home.component';
 import { SharedModule } from '../shared/shared.module';
 import { AuthRoutingModule } from '../auth/auth-routing.module';
 import { CoreModule } from '../core/core.module';
-import { CreateTaskComponent } from './components/task/create-task/create-task.component';
 import { ShowTaskComponent } from './components/task/show-task/show-task.component';
+import { TaskDetailsComponent } from './components/task/task-details/task-details.component';
+import { TaskFormComponent } from './components/task/task-form/task-form.component';
+import { DeleteTaskDialogComponent } from './components/task/delete-task-dialog/delete-task-dialog.component';
+import { EditTaskDialogComponent } from './components/task/edit-task-dialog/edit-task-dialog.component';
 
 @NgModule({
   declarations: [
@@ -17,8 +20,11 @@ import { ShowTaskComponent } from './components/task/show-task/show-task.compone
     UserComponent,
     SettingsComponent,
     HomeComponent,
-    CreateTaskComponent,
-    ShowTaskComponent
+    ShowTaskComponent,
+    TaskDetailsComponent,
+    TaskFormComponent,
+    DeleteTaskDialogComponent,
+    EditTaskDialogComponent
   ],
   imports: [
     CommonModule,

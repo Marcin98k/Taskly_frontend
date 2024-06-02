@@ -1,0 +1,129 @@
+.column-tab {
+  display: flex;
+  flex-direction: column;
+}
+
+.column-tab img {
+  width: 100%;
+  height: 100%;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.content-card {
+  width: 100%;
+  height: 500px;
+}
+
+.content-card button {
+  font-style: italic;
+}
+
+.full-space {
+  width: 100%;
+  height: 100%;
+}
+
+.large-content-box {
+  height: 75%;
+}
+
+.small-content-box {
+  width: 100%;
+  height: 25%;
+}
+
+.name-box {
+  width: 100%;
+  height: 20%;
+}
+
+.name-title {
+  width: 30%;
+}
+
+.name-font {
+  font-size: larger;
+}
+
+.main-content-box {
+  width: 100%;
+  height: 80%;
+}
+
+.inner-left-main-content-box {
+  width: 25%;
+  height: 100%;
+}
+
+.inner-main-content-box {
+  width: 75%;
+  height: 100%;
+}
+
+.left-content-box {
+  width: 25%;
+  height: 100%;
+}
+
+.button-box {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.option-box {
+  width: 100%;
+  height: 50%;
+}
+
+.option-box p {
+  margin: auto;
+}
+
+.small-box-option {
+  width: 100%;
+  height: 20%;
+}
+
+.medium-box-option {
+  width: 100%;
+  height: 30%;
+}
+
+.large-box-option {
+  width: 100%;
+  height: 60%;
+}
+
+.border-vertical {
+  border-top: 1px solid rgb(240, 240, 240);
+  box-sizing: border-box;
+}
+
+.border-horizontal {
+  border-left: 1px solid rgb(240, 240, 240);
+  box-sizing: border-box;
+}
+
+.title-txt {
+  font-style: italic;
+  font-weight: 500;
+  font-size: 20;
+}
+
+.name-txt {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 24;
+}

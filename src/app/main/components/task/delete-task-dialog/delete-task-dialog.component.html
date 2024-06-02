@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Should I delete the task?</h2>
+<mat-dialog-content>
+  <p>Task name</p>
+  <p>{{ task.name }}</p>
+  <app-alert *ngIf="errorMessage">{{ errorMessage }}</app-alert>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button color="accent" mat-button mat-dialog-close>No Thanks</button>
+  <button color="warn" (click)="onDelete()" mat-button cdkFocusInitial>
+    Delete task
+  </button>
+</mat-dialog-actions>

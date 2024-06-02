@@ -21,6 +21,11 @@ import { MatCardModule } from '@angular/material/card';
 import { AlertComponent } from './components/alert/alert.component';
 import { MustMatchDirective } from './validators/must-match.directive';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
+import { A11yModule } from '@angular/cdk/a11y';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [FirstLetterDirective, MustMatchDirective, AlertComponent],
@@ -48,7 +53,12 @@ import { MatMenuModule } from '@angular/material/menu';
     AlertComponent,
     FirstLetterDirective,
     MustMatchDirective,
-    MatMenuModule
+    MatMenuModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
+    A11yModule,
+    MatGridListModule
   ]
 })
 export class SharedModule {}

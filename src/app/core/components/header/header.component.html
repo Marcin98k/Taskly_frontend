@@ -7,8 +7,8 @@
       <button mat-button routerLink="/home">Strona główna</button>
       <button mat-button [matMenuTriggerFor]="menu">Zadania</button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item routerLink="/create-task">Dodaj zadanie</button>
-        <button mat-menu-item routerLink="/see-tasks">Lista zadań</button>
+        <button mat-menu-item routerLink="/task-form">Dodaj zadanie</button>
+        <button mat-menu-item routerLink="/show-tasks">Lista zadań</button>
       </mat-menu>
       <button mat-button (click)="logout()">Wyloguj się</button>
     </ng-container>

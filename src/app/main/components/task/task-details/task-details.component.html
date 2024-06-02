@@ -1,0 +1,109 @@
+<mat-card class="m-3">
+  <mat-card-content *ngIf="task">
+    <div class="column-tab content-card">
+      <div class="flex-container large-content-box">
+        <div class="column-tab full-space">
+          <div class="name-box">
+            <div class="name-title"><p class="title-txt">Task name:</p></div>
+            <div>
+              <p class="title-txt px-5 name-font">
+                {{ task.name }}
+              </p>
+            </div>
+          </div>
+          <div class="border-vertical"></div>
+          <div class="flex-container main-content-box">
+            <div class="column-tab inner-left-main-content-box">
+              <div class="option-box">
+                <div class="centered-content small-box-option">
+                  <p class="title-txt">Category</p>
+                </div>
+                <div class="centered-content large-box-option">
+                  <img src="assets/images/inform.svg" alt="inform" />
+                </div>
+                <div class="centered-content small-box-option">
+                  <p class="name-txt">{{ task.category.value }}</p>
+                </div>
+              </div>
+              <div class="border-vertical"></div>
+              <div class="option-box">
+                <div class="centered-content small-box-option">
+                  <p class="title-txt">Priority</p>
+                </div>
+                <div class="centered-content large-box-option">
+                  <img src="assets/images/inform.svg" alt="inform" />
+                </div>
+                <div class="centered-content small-box-option">
+                  <p class="name-txt">{{ task.priority.value }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="border-horizontal"></div>
+            <div class="m-3 inner-main-content-box">
+              <p>{{ task.note }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="border-horizontal"></div>
+        <div class="column-tab left-content-box">
+          <div class="option-box">
+            <div class="centered-content small-box-option">
+              <p class="title-txt">Task date</p>
+            </div>
+            <div class="centered-content medium-box-option">
+              {{ task.taskDate }}
+            </div>
+            <div class="centered-content small-box-option">
+              <p class="title-txt">Task type</p>
+            </div>
+            <div class="centered-content medium-box-option">
+              {{ task.type.value }}
+            </div>
+          </div>
+          <div class="border-vertical"></div>
+          <div class="option-box">
+            <div class="centered-content small-box-option">
+              <p class="title-txt">Status</p>
+            </div>
+            <div class="centered-content medium-box-option">
+              <img src="assets/images/inform.svg" alt="inform" />
+            </div>
+            <div class="centered-content small-box-option">
+              <p class="name-txt">{{ task.status.value }}</p>
+            </div>
+            <div class="centered-content medium-box-option">
+              <button mat-raised-button color="primary" (click)="finishTask()">
+                Finish task
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-vertical"></div>
+      <div class="flex-container small-content-box">
+        <div class="button-box">
+          <button mat-raised-button color="primary" (click)="previousTask()">
+            Previous task
+          </button>
+        </div>
+        <div class="border-horizontal"></div>
+        <div class="button-box">
+          <button mat-raised-button color="primary" (click)="openEditDialog()">
+            Edit
+          </button>
+        </div>
+        <div class="button-box">
+          <button mat-raised-button color="warn" (click)="openDeleteDialog()">
+            Delete
+          </button>
+        </div>
+        <div class="border-horizontal"></div>
+        <div class="button-box">
+          <button mat-raised-button color="primary" (click)="nextTask()">
+            Next task
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,5 +1,4 @@
 <div class="task-form-wrapper mt-3">
-  <h2 *ngIf="editMode">Add a new task:</h2>
   <form (ngSubmit)="onAddTask()" [formGroup]="taskForm">
     <div>
       <mat-form-field appearance="fill">
@@ -23,6 +22,12 @@
         <mat-error *ngIf="controls.taskDate.invalid">{{
           getErrorMessage(controls.taskDate)
         }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Hour</mat-label>
+        <input matNativeControl type="time" formControlName="taskTime" />
       </mat-form-field>
     </div>
     <div>

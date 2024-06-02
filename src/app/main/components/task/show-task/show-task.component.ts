@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { TaskService } from 'src/app/core/services/task.service';
-import { TokenService } from 'src/app/core/services/token.service';
 import { Task } from 'src/app/main/model/task';
 
 @Component({
@@ -8,31 +11,35 @@ import { Task } from 'src/app/main/model/task';
   templateUrl: './show-task.component.html',
   styleUrls: ['./show-task.component.css']
 })
-export class ShowTaskComponent implements OnInit {
-  task: Task[] = [];
+export class ShowTaskComponent implements AfterViewInit {
+  displayedColumns: string[] = ['lp', 'name', 'taskDate', 'status', 'buttons'];
+  dataSource!: MatTableDataSource<Task>;
 
-  constructor(
-    private taskService: TaskService,
-    private tokenService: TokenService
-  ) {}
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-  ngOnInit(): void {
-    this.getUserTasks();
+  constructor(private taskService: TaskService) {}
+
+  ngAfterViewInit() {
+    this.taskService.getUserTasks().subscribe({
+      next: (tasks) => {
+        this.dataSource = new MatTableDataSource<Task>(tasks);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 
-  private getUserTasks() {
-    try {
-      const userId = this.tokenService.getUserId();
-      this.taskService.getUserTask(userId).subscribe({
-        next: (task) => {
-          this.task = task;
-        },
-        error: (error) => {
-          console.error('Error fetching user tasks', error);
-        }
-      });
-    } catch (error) {
-      console.error('Error getting user ID', error);
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 }

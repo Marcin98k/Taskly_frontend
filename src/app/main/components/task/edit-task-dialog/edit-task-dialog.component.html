@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Edit task</h2>
+<mat-dialog-content>
+  <app-task-form
+    [task]="data.task"
+    [editMode]="true"
+    (closeDialog)="closeDialog()"
+  ></app-task-form>
+</mat-dialog-content>

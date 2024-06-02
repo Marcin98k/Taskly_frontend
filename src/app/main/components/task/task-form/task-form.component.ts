@@ -9,11 +9,11 @@ import { PostTask, PostTaskForm, Task } from 'src/app/main/model/task';
 import { TaskOptions } from 'src/app/main/model/task-options';
 
 @Component({
-  selector: 'app-create-task',
-  templateUrl: './create-task.component.html',
-  styleUrls: ['./create-task.component.css']
+  selector: 'app-task-form',
+  templateUrl: './task-form.component.html',
+  styleUrls: ['./task-form.component.css']
 })
-export class CreateTaskComponent implements OnInit {
+export class TaskFormComponent implements OnInit {
   taskForm!: FormGroup<PostTaskForm>;
   taskData!: Task;
   errorMessage = '';
@@ -22,11 +22,11 @@ export class CreateTaskComponent implements OnInit {
   @Output() closeDialog = new EventEmitter<void>();
   observer: Observer<unknown> = {
     next: () => {
-      this.errorMessage = '';
       if (this.editMode) {
         this.emitCloseDialog();
       }
-      this.router.navigate(['/see-task']);
+      this.errorMessage = '';
+      this.router.navigate(['/show-task']);
     },
     error: (err) => {
       this.errorMessage = 'Wystąpił błąd.' + err;
@@ -65,6 +65,14 @@ export class CreateTaskComponent implements OnInit {
   }
 
   private initForm() {
+    let newTaskDate;
+    if (this.editMode) {
+      const taskDate = this.task.taskDate;
+      newTaskDate = this.getDate(taskDate);
+    } else {
+      newTaskDate = new Date();
+    }
+
     this.taskForm = new FormGroup<PostTaskForm>({
       name: new FormControl(this.editMode ? this.task.name : '', {
         nonNullable: true,
@@ -74,22 +82,27 @@ export class CreateTaskComponent implements OnInit {
           Validators.maxLength(50)
         ]
       }),
-      taskDate: new FormControl(this.editMode ? this.task.taskDate : '', {
+      taskDate: new FormControl(this.editMode ? newTaskDate : new Date(), {
         nonNullable: true,
         validators: [Validators.required]
       }),
-
-      status: new FormControl(this.editMode ? this.task.status : '', {
-        nonNullable: true,
-        validators: [Validators.required]
-      }),
-      priority: new FormControl(this.editMode ? this.task.priority : '', {
+      taskTime: new FormControl(
+        this.editMode ? this.getTimeString(newTaskDate) : '',
+        {
+          nonNullable: true,
+          validators: [Validators.required]
+        }
+      ),
+      status: new FormControl(this.editMode ? this.task.status.name : '', {
         nonNullable: true
       }),
-      category: new FormControl(this.editMode ? this.task.category : '', {
+      priority: new FormControl(this.editMode ? this.task.priority.name : '', {
         nonNullable: true
       }),
-      type: new FormControl(this.editMode ? this.task.type : '', {
+      category: new FormControl(this.editMode ? this.task.category.name : '', {
+        nonNullable: true
+      }),
+      type: new FormControl(this.editMode ? this.task.type.name : '', {
         nonNullable: true
       }),
       note: new FormControl(this.editMode ? this.task.note : '', {
@@ -97,6 +110,17 @@ export class CreateTaskComponent implements OnInit {
         validators: [Validators.maxLength(500)]
       })
     });
+  }
+
+  private getDate(date: string): Date {
+    const lastDate = this.taskService.getDateBy(date);
+    const myNewDate = new Date(lastDate);
+    // myNewDate.setMonth(myNewDate.getMonth() - 1);
+    return myNewDate;
+  }
+
+  private getTimeString(date: Date): string {
+    return date.toTimeString().split('T')[0].substring(0, 5);
   }
 
   getErrorMessage(control: FormControl) {
@@ -107,45 +131,64 @@ export class CreateTaskComponent implements OnInit {
     const currentDateTime = new Date().toISOString();
     const taskValues = this.taskForm.getRawValue();
 
-    const statusOption = this.convertOptionNameToObject(taskValues.status);
-    console.log('---------------------');
-    console.log(statusOption);
+    const statusOption = this.convertOptionNameToObject(
+      taskValues.status,
+      this.statusValues
+    );
 
-    const priorityOption = this.convertOptionNameToObject(taskValues.priority);
-    console.log('---------------------');
-    console.log(priorityOption);
+    const priorityOption = this.convertOptionNameToObject(
+      taskValues.priority,
+      this.priorityValues
+    );
 
-    const categoryOption = this.convertOptionNameToObject(taskValues.category);
-    console.log('---------------------');
-    console.log(categoryOption);
+    const categoryOption = this.convertOptionNameToObject(
+      taskValues.category,
+      this.categoryValues
+    );
 
-    const typeOption = this.convertOptionNameToObject(taskValues.type);
-    console.log('---------------------');
-    console.log(typeOption);
+    const typeOption = this.convertOptionNameToObject(
+      taskValues.type,
+      this.typeValues
+    );
 
     const postTask: PostTask = {
       name: taskValues.name,
-      taskDate: this.taskService.formatDate(taskValues.taskDate),
-      status: statusOption,
-      priority: priorityOption,
-      category: categoryOption,
-      type: typeOption,
+      taskDate: this.taskService.formatDateAndHourToString(
+        new Date().toISOString(),
+        taskValues.taskTime
+      ),
+      status: taskValues.status,
+      priority: taskValues.priority,
+      category: taskValues.category,
+      type: taskValues.type,
       note: taskValues.note,
       userId: this.tokenService.getUserId(),
-      dateAdded: this.taskService.formatDate(currentDateTime)
+      dateAdded: this.taskService.formatDateToString(currentDateTime)
     };
 
-    console.log(postTask);
-
-    this.taskService.addTask(postTask).subscribe((data) => {
-      console.log(data);
-    });
+    if (this.editMode) {
+      console.log('editMode == true');
+      console.log(postTask);
+      console.log(this.task.id);
+      this.taskService.patchTask(this.task.id, postTask).subscribe((data) => {
+        console.log('editMode == true');
+        console.log(data);
+      });
+    } else {
+      console.log('editMode == false');
+      console.log(postTask);
+      this.taskService.addTask(postTask).subscribe((data) => {
+        console.log('editMode == false');
+        console.log(data);
+      });
+    }
   }
 
   private convertOptionNameToObject(
-    selectedOption: string | TaskOptions
+    selectedOption: string | TaskOptions,
+    optionsArray: TaskOptions[]
   ): TaskOptions {
-    let statusObject = this.statusValues.find(
+    let statusObject = optionsArray.find(
       (option) => option.name === selectedOption
     );
     if (typeof statusObject === 'undefined') {
